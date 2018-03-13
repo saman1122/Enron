@@ -43,7 +43,7 @@ import java.util.regex.Pattern;
  *
  * @author Thibault Debatty
  */
-public class Email implements Serializable {
+public class EmailDataset implements Serializable {
     private final String raw;
     private final String mailbox;
     private final String user;
@@ -58,7 +58,7 @@ public class Email implements Serializable {
     String fileSeparator = Pattern.quote(System.getProperty("file.separator"));
 
 
-    Email(final String raw, final String mailbox) throws MessagingException, Exception {
+    EmailDataset(final String raw, final String mailbox) throws MessagingException, Exception {
         this.raw = raw;
         String[] strings = mailbox.split(fileSeparator, 2);
         this.user = strings[0];
@@ -132,7 +132,7 @@ public class Email implements Serializable {
     @Override
     public boolean  equals(Object other) {
 
-        Email other_email = (Email) other;
+        EmailDataset other_email = (EmailDataset) other;
         return other_email.message_id.equals(this.message_id);
 
     }

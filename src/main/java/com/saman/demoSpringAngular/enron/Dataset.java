@@ -40,7 +40,7 @@ import static java.awt.SystemColor.info;
  *
  * @author Thibault Debatty
  */
-public class Dataset extends info.debatty.java.datasets.Dataset<Email> {
+public class Dataset extends info.debatty.java.datasets.Dataset<EmailDataset> {
 
     private final String directory;
 
@@ -49,7 +49,7 @@ public class Dataset extends info.debatty.java.datasets.Dataset<Email> {
 
     }
 
-    public Iterator<Email> iterator() {
+    public Iterator<EmailDataset> iterator() {
         return new EnronIterator(directory);
     }
 
@@ -80,7 +80,7 @@ public class Dataset extends info.debatty.java.datasets.Dataset<Email> {
 
     
 
-    private static class EnronIterator implements Iterator<Email> {
+    private static class EnronIterator implements Iterator<EmailDataset> {
 
         private static final int BUFFER_SIZE = 10;
 
@@ -90,7 +90,7 @@ public class Dataset extends info.debatty.java.datasets.Dataset<Email> {
          */
         private final Stack<File> directories = new Stack<File>();
 
-        private final LinkedList<Email> available_emails = new LinkedList<Email>();
+        private final LinkedList<EmailDataset> available_emails = new LinkedList<EmailDataset>();
         private final LinkedList<File> available_files = new LinkedList<File>();
         private final String root;
 
@@ -110,8 +110,8 @@ public class Dataset extends info.debatty.java.datasets.Dataset<Email> {
             return !available_emails.isEmpty();
         }
 
-        public Email next() {
-            Email current = available_emails.removeFirst();
+        public EmailDataset next() {
+            EmailDataset current = available_emails.removeFirst();
             if (available_emails.isEmpty()) {
                 readNextPages();
             }
@@ -133,7 +133,7 @@ public class Dataset extends info.debatty.java.datasets.Dataset<Email> {
                 File next_file = available_files.poll();
                 try {
                     available_emails.add(
-                            new Email(
+                            new EmailDataset(
                                     readFile(next_file.getPath()),
                                     next_file.getParent().substring(root.length() + 1)));
 
