@@ -10,15 +10,16 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 public class DemoSpringAngularApplication {
 
     public static void main(String[] args) {
-		/* Not working for the moment
-
 		Dataset enronDataset = new Dataset(DBLP.class.getClassLoader().getResource("enron").getFile());
 
-
 		for(Email email : enronDataset ){
-			System.out.println(email.toString());
+			try {
+				System.out.println(email.getFrom());
+			} catch (Exception e) {
+				e.printStackTrace();
+			}
 		}
-		*/
+
         SpringApplication.run(DemoSpringAngularApplication.class, args);
     }
 }

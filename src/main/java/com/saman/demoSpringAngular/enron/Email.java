@@ -37,6 +37,7 @@ import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Properties;
+import java.util.regex.Pattern;
 
 /**
  *
@@ -54,10 +55,12 @@ public class Email implements Serializable {
     private final String subject;
     private final String content;
 
+    String fileSeparator = Pattern.quote(System.getProperty("file.separator"));
+
 
     Email(final String raw, final String mailbox) throws MessagingException, Exception {
         this.raw = raw;
-        String[] strings = mailbox.split(File.separator, 2);
+        String[] strings = mailbox.split(fileSeparator, 2);
         this.user = strings[0];
         this.mailbox = strings[1];
 
