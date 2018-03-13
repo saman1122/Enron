@@ -38,7 +38,8 @@ public class DemoSpringAngularApplication implements CommandLineRunner {
                     email.getCc(),
                     email.getBcc(),
                     email.getSubject(),
-                    email.getContent()
+                    email.getContent(),
+                    email.getDate()
             );
 
             emailRepository.save(emailTmp);

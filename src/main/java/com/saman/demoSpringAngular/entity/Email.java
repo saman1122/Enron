@@ -2,6 +2,7 @@ package com.saman.demoSpringAngular.entity;
 
 import org.springframework.data.annotation.Id;
 
+import java.util.Date;
 import java.util.List;
 
 public class Email {
@@ -16,10 +17,11 @@ public class Email {
     public List<String> bcc;
     public String subject;
     public String content;
+    public Date date;
 
     public Email() {}
 
-    public Email(String messageId, String raw, String mailbox, String user, String from, List<String> to, List<String> cc, List<String> bcc, String subject, String content) {
+    public Email(String messageId, String raw, String mailbox, String user, String from, List<String> to, List<String> cc, List<String> bcc, String subject, String content , Date date) {
         this.messageId = messageId;
         this.raw = raw;
         this.mailbox = mailbox;
@@ -30,6 +32,7 @@ public class Email {
         this.bcc = bcc;
         this.subject = subject;
         this.content = content;
+        this.date = date;
     }
 
     @Override
@@ -45,6 +48,7 @@ public class Email {
                 ", bcc=" + bcc +
                 ", subject='" + subject + '\'' +
                 ", content='" + content + '\'' +
+                ", date='" + date.toString() + '\'' +
                 '}';
     }
 }

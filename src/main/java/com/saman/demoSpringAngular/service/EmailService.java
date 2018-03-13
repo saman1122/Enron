@@ -26,7 +26,12 @@ public class EmailService {
     public List<Email> getEmailFindByTerm(String term) {
         List<Email> retour = new ArrayList<>();
         emailRepository.findAll().forEach(retour::add);
-        return  retour.stream().filter(t-> t.toString().contains(term)).collect(Collectors.toList());
+        return  retour.stream().filter(t->
+                t.to.contains(term) || t.mailbox.contains(term) || t.from.contains(term)
+                || t.date.toString().contains(term) || t.subject.contains(term)
+                || t.content.contains(term) || t.cc.contains(term) || t.bcc.contains(term)
+                || t.user.contains(term)
+        ).collect(Collectors.toList());
     }
 
     public Page<Email> listAllByPage(Pageable pageable){

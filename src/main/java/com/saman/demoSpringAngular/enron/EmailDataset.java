@@ -31,10 +31,10 @@ import javax.mail.MessagingException;
 import javax.mail.Session;
 import javax.mail.internet.MimeMessage;
 import java.io.ByteArrayInputStream;
-import java.io.File;
 import java.io.InputStream;
 import java.io.Serializable;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 import java.util.Properties;
 import java.util.regex.Pattern;
@@ -54,6 +54,7 @@ public class EmailDataset implements Serializable {
     private final String message_id;
     private final String subject;
     private final String content;
+    private final Date date;
 
     String fileSeparator = Pattern.quote(System.getProperty("file.separator"));
 
@@ -74,8 +75,9 @@ public class EmailDataset implements Serializable {
         cc = addressToString(parser.getCc());
         bcc = addressToString(parser.getBcc());
         subject = parser.getSubject();
-        content = parser.getPlainContent();
+        content = (message.getContent())!= null ? message.getContent().toString() : "null";
         message_id = parser.getMimeMessage().getMessageID();
+        date = message.getSentDate();
 
 
     }
@@ -127,6 +129,10 @@ public class EmailDataset implements Serializable {
 
     public String getRaw() {
         return raw;
+    }
+
+    public Date getDate() {
+        return date;
     }
 
     @Override
