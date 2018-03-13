@@ -43,20 +43,5 @@ public class DemoSpringAngularApplication implements CommandLineRunner {
 
             emailRepository.save(emailTmp);
         }
-
-        // fetch all customers
-        System.out.println("Customers found with findAll():");
-        System.out.println("-------------------------------");
-        for (Email email : emailRepository.findAll()) {
-            System.out.println(email);
-        }
-        System.out.println();
-
-        // fetch an individual customer
-        System.out.println("Customer found with findByFirstName('Alice'):");
-        System.out.println("--------------------------------");
-
-        emailRepository.findByFrom("phillip.allen@enron.com").forEach(System.out::println);
-
     }
 }
