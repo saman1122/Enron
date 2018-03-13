@@ -3,15 +3,21 @@
     <thead>
       <tr>
         <th>#</th>
-        <th>Brand</th>
-        <th>Model</th>
+        <th>Date</th>
+        <th>From</th>
+        <th>To</th>
+        <th>Subject</th>
+        <th>Occurrence Numbers</th>
       </tr>
     </thead>
     <tbody>
-      <tr *ngFor="let car of cars; let i = index">
+      <tr *ngFor="let email of emails; let i = index">
         <th scope="row">{{ i + 1 }}</th>
-        <td>{{ car.brand }}</td>
-        <td>{{ car.model }}</td>
+        <td>{{ email.date }}</td>
+        <td>{{ email.from }}</td>
+        <td>{{ email.to }}</td>
+        <td>{{ email.subject }}</td>
+        <td>{{ i }}</td>
       </tr>
     </tbody>
   </table>

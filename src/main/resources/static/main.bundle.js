@@ -50,7 +50,7 @@ module.exports = ""
 /***/ "./src/app/app.component.html":
 /***/ (function(module, exports) {
 
-module.exports = "<!--The content below is only a placeholder and can be replaced.-->\n<app-navbar></app-navbar>\n<router-outlet></router-outlet>"
+module.exports = "<!--The content below is only a placeholder and can be replaced.-->\r\n<app-navbar></app-navbar>\r\n<router-outlet></router-outlet>"
 
 /***/ }),
 
@@ -148,7 +148,7 @@ module.exports = ""
 /***/ "./src/app/home/home.component.html":
 /***/ (function(module, exports) {
 
-module.exports = "<div class=”container”>\n  <div class=”template”>\n    <h1>Demo Springboot + Angular 5</h1>\n  </div>\n</div>"
+module.exports = "<div class=”container”>\r\n  <div class=”template”>\r\n    <h1>Demo Springboot + Angular 5</h1>\r\n  </div>\r\n</div>"
 
 /***/ }),
 
@@ -198,7 +198,7 @@ module.exports = ""
 /***/ "./src/app/navbar/navbar.component.html":
 /***/ (function(module, exports) {
 
-module.exports = "<nav class=\"navbar navbar-expand-md navbar-dark bg-dark fixed-top\">\n  <a class=\"navbar-brand\" href=\"#\">Logo</a>\n  <button class=\"navbar-toggler\" type=\"button\" data-toggle=\"collapse\" (click)=\"isCollapsed = !isCollapsed\" data-target=\"#navbarsExampleDefault\"\n    aria-controls=\"navbarsExampleDefault\" aria-expanded=\"false\" aria-label=\"Toggle navigation\">\n    <span class=\"navbar-toggler-icon\"></span>\n  </button>\n  <div class=\"collapse navbar-collapse\" id=\"navbarsExampleDefault\">\n    <ul class=\"navbar-nav mr-auto\">\n      <li class=\"nav-item\">\n        <a class=\"nav-link\" routerLink=\"\">Home\n          <span class=\"sr-only\">(current)</span>\n        </a>\n      </li>\n      <li>\n        <a class=\"nav-link\" routerLink=\"table\">Table</a>\n      </li>\n    </ul>\n    <form class=\"form-inline my-2 my-lg-0\">\n      <input class=\"form-control mr-sm-2\" type=\"text\" placeholder=\"Search\" aria-label=\"Search\">\n      <button class=\"btn btn-outline-success my-2 my-sm-0\" type=\"submit\">Search</button>\n    </form>\n  </div>\n</nav>"
+module.exports = "<nav class=\"navbar navbar-expand-md navbar-dark bg-dark fixed-top\">\r\n  <div class=\"collapse navbar-collapse\" id=\"navbarsExampleDefault\">\r\n    <ul class=\"navbar-nav mr-auto\">\r\n      <li class=\"nav-item\">\r\n        <a class=\"nav-link\" routerLink=\"\">Home\r\n          <span class=\"sr-only\">(current)</span>\r\n        </a>\r\n      </li>\r\n      <li>\r\n        <a class=\"nav-link\" routerLink=\"table\">Result</a>\r\n      </li>\r\n    </ul>\r\n    <form class=\"form-inline my-2 my-lg-0\">\r\n      <input class=\"form-control mr-sm-2\" type=\"text\" placeholder=\"Search\" aria-label=\"Search\">\r\n      <button class=\"btn btn-outline-success my-2 my-sm-0\" type=\"submit\">Search</button>\r\n    </form>\r\n  </div>\r\n</nav>"
 
 /***/ }),
 
@@ -248,7 +248,7 @@ module.exports = ""
 /***/ "./src/app/table/table.component.html":
 /***/ (function(module, exports) {
 
-module.exports = "<div class=\"reglist\">\n  <table class=\"table table-striped\">\n    <thead>\n      <tr>\n        <th>#</th>\n        <th>Brand</th>\n        <th>Model</th>\n      </tr>\n    </thead>\n    <tbody>\n      <tr *ngFor=\"let car of cars; let i = index\">\n        <th scope=\"row\">{{ i + 1 }}</th>\n        <td>{{ car.brand }}</td>\n        <td>{{ car.model }}</td>\n      </tr>\n    </tbody>\n  </table>\n</div>\n<br>"
+module.exports = "<div class=\"reglist\">\r\n  <table class=\"table table-striped\">\r\n    <thead>\r\n      <tr>\r\n        <th>#</th>\r\n        <th>Date</th>\r\n        <th>From</th>\r\n        <th>To</th>\r\n        <th>Subject</th>\r\n        <th>Occurrence Numbers</th>\r\n      </tr>\r\n    </thead>\r\n    <tbody>\r\n      <tr *ngFor=\"let email of emails; let i = index\">\r\n        <th scope=\"row\">{{ i + 1 }}</th>\r\n        <td>{{ email.date }}</td>\r\n        <td>{{ email.from }}</td>\r\n        <td>{{ email.to }}</td>\r\n        <td>{{ email.subject }}</td>\r\n        <td>{{ i }}</td>\r\n      </tr>\r\n    </tbody>\r\n  </table>\r\n</div>\r\n<br>"
 
 /***/ }),
 
@@ -270,11 +270,10 @@ var __metadata = (this && this.__metadata) || function (k, v) {
 
 var TableComponent = /** @class */ (function () {
     function TableComponent() {
-        this.cars = [];
+        this.emails = [];
     }
     TableComponent.prototype.ngOnInit = function () {
-        this.cars.push(new Car('Porsche', 'Cayenne'));
-        this.cars.push(new Car('Bmw', 'X6'));
+        this.emails.push(new Email('21769550.1075859177511', 'Cayenne', 'vanderbilt', 'rora-h', 'lee.jackson@enron.com', ['harry.arora@enron.com', 'kristin.gandy@enron.com'], [], [], 'Summer Interns', 'Here is my summary of our second round summer interviews.  Top 3 candidates below.1.	Craig -	 Well rounded, Military background, excellent leadership experience (aircraft carrier pilot), did not have a finance background, but performed very well on Harrys analytical interview.  Very personable, confident and sold himself well.  I think he is very interested in Enron and would likely accept.2.	Victor -	He was a strong candidate in my more subjective interview, but I didnt think he was quite as strong as Ajay.  However he outperformed Ajay in the analytical interview.  With that feedback from Harry I feel comfortable placing Victor ahead of Ajay.  Also very interested in Enron.3.	Ajay - 	Very polished, presented/sold himself very well, Excellent understanding of Enrons business (did his homework),  Relative to others based on my interview he ranked in the top 2, However did not perform as well as others in the top 4-5 in the analytical interview.  For this reason I d push him back to number three.Aside from these three there were two others that are worth discussing.  Casey JonesAndrew RosenbergWe Understand these two may have outstanding offers from firms that they are very interested in.  I would not consider either of these two ahead of Craig, but might place Casey ahead of Victor.  However I think Casey is least likely to accept the offer.  My suggestion would be to make offers to Craig & Victor, then consider a 3rd offer to Andrew, recognizing we would likely get a maximum of 2/3.Lee Jackson', '2001-01-29 21:43:00.000'));
     };
     TableComponent = __decorate([
         Object(__WEBPACK_IMPORTED_MODULE_0__angular_core__["n" /* Component */])({
@@ -287,14 +286,32 @@ var TableComponent = /** @class */ (function () {
     return TableComponent;
 }());
 
-var Car = /** @class */ (function () {
-    function Car(brand, model) {
-        if (brand === void 0) { brand = ''; }
-        if (model === void 0) { model = ''; }
-        this.brand = brand;
-        this.model = model;
+var Email = /** @class */ (function () {
+    function Email(messageId, raw, mailbox, user, from, to, cc, bcc, subject, content, date) {
+        if (messageId === void 0) { messageId = ''; }
+        if (raw === void 0) { raw = ''; }
+        if (mailbox === void 0) { mailbox = ''; }
+        if (user === void 0) { user = ''; }
+        if (from === void 0) { from = ''; }
+        if (to === void 0) { to = []; }
+        if (cc === void 0) { cc = []; }
+        if (bcc === void 0) { bcc = []; }
+        if (subject === void 0) { subject = ''; }
+        if (content === void 0) { content = ''; }
+        if (date === void 0) { date = ''; }
+        this.messageId = messageId;
+        this.raw = raw;
+        this.mailbox = mailbox;
+        this.user = user;
+        this.from = from;
+        this.to = to;
+        this.cc = cc;
+        this.bcc = bcc;
+        this.subject = subject;
+        this.content = content;
+        this.date = date;
     }
-    return Car;
+    return Email;
 }());
 
 
