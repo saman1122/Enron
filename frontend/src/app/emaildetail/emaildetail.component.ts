@@ -1,5 +1,6 @@
 import { Component, OnInit, Inject } from '@angular/core';
 import {MatDialog, MatDialogRef, MAT_DIALOG_DATA} from '@angular/material';
+import {Email} from '../app.email.class';
 
 @Component({
   selector: 'app-emaildetail',
@@ -15,23 +16,6 @@ export class EmaildetailComponent implements OnInit {
 
   ngOnInit() {
   }
-
-}
-
-class Email {
-  constructor(
-    public messageId : String ='',
-    public raw : String ='',
-    public mailbox : String ='',
-    public user : String ='',
-    public from : String ='',
-    public to : String[] =[],
-    public cc : String[] =[],
-    public bcc : String[] =[],
-    public subject : String ='',
-    public content : String ='',
-    public date : String =''
-  ) { }
 
 }
 
