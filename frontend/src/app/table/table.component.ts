@@ -28,6 +28,12 @@ export class TableComponent implements OnInit {
   
   afficher(email){
     let dialogRef = this.dialog.open(EmaildetailComponent, {
+      height: '400px',
+      width: '800px',
+      position: {
+        left: '20%',
+      },
+      hasBackdrop: false,
       data: { email }
     });
  }

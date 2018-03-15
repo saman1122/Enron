@@ -1,22 +1,21 @@
 <div class="reglist">
-  <table class="table table-striped">
-    <thead>
-      <tr>
-        <th>Date</th>
-        <th>From</th>
-        <th>To</th>
-        <th>Subject</th>
-        <th>Occurrence Numbers</th>
-      </tr>
-    </thead>
-    <tbody>
-      <tr>
-        <td>{{ email.date }}</td>
-        <td>{{ email.from }}</td>
-        <td>{{ email.to }}</td>
-        <td>{{ email.subject }}</td>
-        </tr>
-    </tbody>
-  </table>
+
+    <div class="container">
+        <h2>Message n° {{ email.messageId }} </h2>
+        <div class="card">
+          <div class="card-header">
+              <div class="row">
+                  <div class="col-6 col-sm-12">
+                    <p><b>Date : </b> {{ email.date }}</p>
+                    <p><b>From : </b> {{ email.from }}</p>
+                    <p><b>To : </b>{{ email.to }}</p>
+                    <p><b>Subject : </b>{{ email.subject }}</p>
+                  </div>
+                </div>
+
+          </div>
+          <div class="card-body">{{ email.content }}</div> 
+        </div>
+      </div>
 </div>
 <br>
