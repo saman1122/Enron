@@ -26,8 +26,8 @@ public class EmailRest {
     }
 
     @RequestMapping("/search")
-    public List<Email> getByTerm(@RequestParam("term") String term) {
-        return service.getEmailFindByTerm(term);
+    public Page<Email> getByTerm(@RequestParam("term") String term,Pageable pageable) {
+        return service.getEmailFindByTerm(term,pageable);
     }
 
     @RequestMapping(value="/all",method= RequestMethod.GET)
