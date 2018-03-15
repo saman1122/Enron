@@ -16,6 +16,9 @@ export class EmaildetailComponent implements OnInit {
   ngOnInit() {
   }
 
+  close(): void {
+    this.dialogRef.close();
+  }
 }
 
 class Email {

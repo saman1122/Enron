@@ -1,7 +1,16 @@
 <div class="reglist">
 
     <div class="container">
-        <h2>Message n° {{ email.messageId }} </h2>
+        <div class="row">
+            <div class="col-6 col-sm-10">
+                <h2>
+                 Message n° {{ email.messageId }} 
+                </h2>
+            </div>
+            <div class="col-6 col-sm-2">
+                <button type="button" class="btn btn-danger" (click)="close()">Fermer</button>
+            </div>
+        </div>
         <div class="card">
           <div class="card-header">
               <div class="row">
