@@ -96,11 +96,12 @@ var AppComponent = /** @class */ (function () {
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__app_routing_module__ = __webpack_require__("./src/app/app-routing.module.ts");
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__angular_material__ = __webpack_require__("./node_modules/@angular/material/esm5/material.es5.js");
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_5__angular_platform_browser_animations__ = __webpack_require__("./node_modules/@angular/platform-browser/esm5/animations.js");
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_6__app_component__ = __webpack_require__("./src/app/app.component.ts");
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_7__navbar_navbar_component__ = __webpack_require__("./src/app/navbar/navbar.component.ts");
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_8__home_home_component__ = __webpack_require__("./src/app/home/home.component.ts");
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_9__table_table_component__ = __webpack_require__("./src/app/table/table.component.ts");
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_10__emaildetail_emaildetail_component__ = __webpack_require__("./src/app/emaildetail/emaildetail.component.ts");
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_6__angular_common_http__ = __webpack_require__("./node_modules/@angular/common/esm5/http.js");
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_7__app_component__ = __webpack_require__("./src/app/app.component.ts");
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_8__navbar_navbar_component__ = __webpack_require__("./src/app/navbar/navbar.component.ts");
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_9__home_home_component__ = __webpack_require__("./src/app/home/home.component.ts");
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_10__table_table_component__ = __webpack_require__("./src/app/table/table.component.ts");
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_11__emaildetail_emaildetail_component__ = __webpack_require__("./src/app/emaildetail/emaildetail.component.ts");
 var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
     var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
     if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
@@ -118,31 +119,74 @@ var __decorate = (this && this.__decorate) || function (decorators, target, key,
 
 
 
+
 var AppModule = /** @class */ (function () {
     function AppModule() {
     }
     AppModule = __decorate([
         Object(__WEBPACK_IMPORTED_MODULE_1__angular_core__["K" /* NgModule */])({
             declarations: [
-                __WEBPACK_IMPORTED_MODULE_6__app_component__["a" /* AppComponent */],
-                __WEBPACK_IMPORTED_MODULE_7__navbar_navbar_component__["a" /* NavbarComponent */],
-                __WEBPACK_IMPORTED_MODULE_8__home_home_component__["a" /* HomeComponent */],
-                __WEBPACK_IMPORTED_MODULE_9__table_table_component__["a" /* TableComponent */],
-                __WEBPACK_IMPORTED_MODULE_10__emaildetail_emaildetail_component__["a" /* EmaildetailComponent */]
+                __WEBPACK_IMPORTED_MODULE_7__app_component__["a" /* AppComponent */],
+                __WEBPACK_IMPORTED_MODULE_8__navbar_navbar_component__["a" /* NavbarComponent */],
+                __WEBPACK_IMPORTED_MODULE_9__home_home_component__["a" /* HomeComponent */],
+                __WEBPACK_IMPORTED_MODULE_10__table_table_component__["a" /* TableComponent */],
+                __WEBPACK_IMPORTED_MODULE_11__emaildetail_emaildetail_component__["a" /* EmaildetailComponent */]
             ],
             imports: [
                 __WEBPACK_IMPORTED_MODULE_0__angular_platform_browser__["a" /* BrowserModule */],
                 __WEBPACK_IMPORTED_MODULE_4__angular_material__["c" /* MatDialogModule */],
                 __WEBPACK_IMPORTED_MODULE_0__angular_platform_browser__["a" /* BrowserModule */],
                 __WEBPACK_IMPORTED_MODULE_5__angular_platform_browser_animations__["a" /* BrowserAnimationsModule */],
-                __WEBPACK_IMPORTED_MODULE_2__angular_router__["a" /* RouterModule */].forRoot(__WEBPACK_IMPORTED_MODULE_3__app_routing_module__["a" /* routes */])
+                __WEBPACK_IMPORTED_MODULE_2__angular_router__["a" /* RouterModule */].forRoot(__WEBPACK_IMPORTED_MODULE_3__app_routing_module__["a" /* routes */]),
+                __WEBPACK_IMPORTED_MODULE_6__angular_common_http__["b" /* HttpClientModule */]
             ],
             providers: [],
-            bootstrap: [__WEBPACK_IMPORTED_MODULE_6__app_component__["a" /* AppComponent */]],
-            entryComponents: [__WEBPACK_IMPORTED_MODULE_10__emaildetail_emaildetail_component__["a" /* EmaildetailComponent */]]
+            bootstrap: [__WEBPACK_IMPORTED_MODULE_7__app_component__["a" /* AppComponent */]],
+            entryComponents: [__WEBPACK_IMPORTED_MODULE_11__emaildetail_emaildetail_component__["a" /* EmaildetailComponent */]]
         })
     ], AppModule);
     return AppModule;
+}());
+
+
+
+/***/ }),
+
+/***/ "./src/app/email.service.ts":
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return EmailService; });
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__angular_core__ = __webpack_require__("./node_modules/@angular/core/esm5/core.js");
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__angular_common_http__ = __webpack_require__("./node_modules/@angular/common/esm5/http.js");
+var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
+    var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
+    if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
+    else for (var i = decorators.length - 1; i >= 0; i--) if (d = decorators[i]) r = (c < 3 ? d(r) : c > 3 ? d(target, key, r) : d(target, key)) || r;
+    return c > 3 && r && Object.defineProperty(target, key, r), r;
+};
+var __metadata = (this && this.__metadata) || function (k, v) {
+    if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
+};
+
+
+var EmailService = /** @class */ (function () {
+    function EmailService(http) {
+        this.http = http;
+        this.urlServer = 'http://localhost:8080/api';
+    }
+    EmailService.prototype.getAllEmails = function () {
+        console.log("getAllEmails, url: " + this.urlServer + '/all');
+        return this.http.get(this.urlServer + '/all');
+    };
+    EmailService.prototype.getEmails = function (term) {
+        return this.http.get(this.urlServer + '/search?term=' + term);
+    };
+    EmailService = __decorate([
+        Object(__WEBPACK_IMPORTED_MODULE_0__angular_core__["C" /* Injectable */])(),
+        __metadata("design:paramtypes", [__WEBPACK_IMPORTED_MODULE_1__angular_common_http__["a" /* HttpClient */]])
+    ], EmailService);
+    return EmailService;
 }());
 
 
@@ -159,7 +203,7 @@ module.exports = ""
 /***/ "./src/app/emaildetail/emaildetail.component.html":
 /***/ (function(module, exports) {
 
-module.exports = "<div class=\"reglist\">\n  <table class=\"table table-striped\">\n    <thead>\n      <tr>\n        <th>Date</th>\n        <th>From</th>\n        <th>To</th>\n        <th>Subject</th>\n        <th>Occurrence Numbers</th>\n      </tr>\n    </thead>\n    <tbody>\n      <tr>\n        <td>{{ email.date }}</td>\n        <td>{{ email.from }}</td>\n        <td>{{ email.to }}</td>\n        <td>{{ email.subject }}</td>\n        </tr>\n    </tbody>\n  </table>\n</div>\n<br>"
+module.exports = "<div class=\"reglist\">\r\n\r\n    <div class=\"container\">\r\n        <h2>Message n° {{ email.messageId }} </h2>\r\n        <div class=\"card\">\r\n          <div class=\"card-header\">\r\n              <div class=\"row\">\r\n                  <div class=\"col-6 col-sm-12\">\r\n                    <p><b>Date : </b> {{ email.date }}</p>\r\n                    <p><b>From : </b> {{ email.from }}</p>\r\n                    <p><b>To : </b>{{ email.to }}</p>\r\n                    <p><b>Subject : </b>{{ email.subject }}</p>\r\n                  </div>\r\n                </div>\r\n\r\n          </div>\r\n          <div class=\"card-body\">{{ email.content }}</div> \r\n        </div>\r\n      </div>\r\n</div>\r\n<br>"
 
 /***/ }),
 
@@ -359,6 +403,7 @@ module.exports = "<div class=\"reglist\">\r\n  <table class=\"table table-stripe
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__angular_core__ = __webpack_require__("./node_modules/@angular/core/esm5/core.js");
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__angular_material__ = __webpack_require__("./node_modules/@angular/material/esm5/material.es5.js");
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__emaildetail_emaildetail_component__ = __webpack_require__("./src/app/emaildetail/emaildetail.component.ts");
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__email_service__ = __webpack_require__("./src/app/email.service.ts");
 var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
     var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
     if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
@@ -371,12 +416,20 @@ var __metadata = (this && this.__metadata) || function (k, v) {
 
 
 
+
 var TableComponent = /** @class */ (function () {
-    function TableComponent(dialog) {
+    function TableComponent(dialog, service) {
         this.dialog = dialog;
+        this.service = service;
         this.emails = [];
     }
     TableComponent.prototype.ngOnInit = function () {
+        var _this = this;
+        this.service.getAllEmails()
+            .subscribe(function (data) {
+            console.log(data);
+            _this.emails = data.content;
+        });
         this.emails.push(new Email('21769550.1075859177511', 'Cayenne', 'vanderbilt', 'rora-h', 'lee.jackson@enron.com', ['harry.arora@enron.com', 'kristin.gandy@enron.com'], [], [], 'Summer Interns', 'Here is my summary of our second round summer interviews.  Top 3 candidates below.1.	Craig -	 Well rounded, Military background, excellent leadership experience (aircraft carrier pilot), did not have a finance background, but performed very well on Harrys analytical interview.  Very personable, confident and sold himself well.  I think he is very interested in Enron and would likely accept.2.	Victor -	He was a strong candidate in my more subjective interview, but I didnt think he was quite as strong as Ajay.  However he outperformed Ajay in the analytical interview.  With that feedback from Harry I feel comfortable placing Victor ahead of Ajay.  Also very interested in Enron.3.	Ajay - 	Very polished, presented/sold himself very well, Excellent understanding of Enrons business (did his homework),  Relative to others based on my interview he ranked in the top 2, However did not perform as well as others in the top 4-5 in the analytical interview.  For this reason I d push him back to number three.Aside from these three there were two others that are worth discussing.  Casey JonesAndrew RosenbergWe Understand these two may have outstanding offers from firms that they are very interested in.  I would not consider either of these two ahead of Craig, but might place Casey ahead of Victor.  However I think Casey is least likely to accept the offer.  My suggestion would be to make offers to Craig & Victor, then consider a 3rd offer to Andrew, recognizing we would likely get a maximum of 2/3.Lee Jackson', '2001-01-29 21:43:00.000'));
     };
     TableComponent.prototype.afficher = function (email) {
@@ -387,10 +440,11 @@ var TableComponent = /** @class */ (function () {
     TableComponent = __decorate([
         Object(__WEBPACK_IMPORTED_MODULE_0__angular_core__["n" /* Component */])({
             selector: 'app-table',
+            providers: [__WEBPACK_IMPORTED_MODULE_3__email_service__["a" /* EmailService */]],
             template: __webpack_require__("./src/app/table/table.component.html"),
             styles: [__webpack_require__("./src/app/table/table.component.css")]
         }),
-        __metadata("design:paramtypes", [__WEBPACK_IMPORTED_MODULE_1__angular_material__["b" /* MatDialog */]])
+        __metadata("design:paramtypes", [__WEBPACK_IMPORTED_MODULE_1__angular_material__["b" /* MatDialog */], __WEBPACK_IMPORTED_MODULE_3__email_service__["a" /* EmailService */]])
     ], TableComponent);
     return TableComponent;
 }());

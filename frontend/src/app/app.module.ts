@@ -4,6 +4,7 @@ import { RouterModule } from '@angular/router';
 import { routes } from './app-routing.module';
 import { MatDialogModule } from '@angular/material';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import { HttpClientModule } from '@angular/common/http';
 
 import { AppComponent } from './app.component';
 import { NavbarComponent } from './navbar/navbar.component';
@@ -25,7 +26,8 @@ import { EmaildetailComponent } from './emaildetail/emaildetail.component';
     MatDialogModule,
     BrowserModule, 
     BrowserAnimationsModule,
-    RouterModule.forRoot(routes)
+    RouterModule.forRoot(routes),
+    HttpClientModule
   ],
   providers: [],
   bootstrap: [AppComponent],
