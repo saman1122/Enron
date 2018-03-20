@@ -4,9 +4,7 @@ import com.saman.demoSpringAngular.domain.SearchResult;
 import com.saman.demoSpringAngular.entity.Email;
 import com.saman.demoSpringAngular.repository.EmailRepository;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.domain.Page;
-import org.springframework.data.domain.PageImpl;
-import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.*;
 import org.springframework.stereotype.Service;
 import org.springframework.util.StringUtils;
 
@@ -42,7 +40,6 @@ public class EmailService {
         List<SearchResult> retour = new ArrayList<>();
         HashMap<Email,Integer> occurencesNumber = new HashMap<>();
         emailRepository.findTop20000ByContentContainingOrToContainingOrFromContainingOrCcContainingOrBccContainingOrSubjectContainingAllIgnoreCase(term,term,term,term,term,term)
-                .stream()
                 .forEach(email -> {
                     occurencesNumber.put(email,StringUtils.countOccurrencesOf(email.toString().toLowerCase(),term.toLowerCase()));
                 });
@@ -52,6 +49,27 @@ public class EmailService {
                 .sorted(Map.Entry.<Email, Integer>comparingByValue().reversed())
                 .forEach((k) -> retour.add(new SearchResult(k.getKey(),k.getValue())));
 
-        return new PageImpl<>(retour,pageable,retour.size());
+
+        // Create new Page
+        long nbrElement = retour.size();
+        int toDeleteBefore = pageable.getPageNumber()*pageable.getPageSize();
+        int toDeleteAfter = (pageable.getPageNumber()+1)*pageable.getPageSize();
+
+        if (nbrElement > toDeleteBefore) {
+            if (nbrElement > pageable.getPageSize()) {
+                for (int i = 0; i < toDeleteBefore; i++){
+                    retour.remove(0);
+                }
+
+                while (retour.size() > toDeleteAfter)
+                    retour.remove(toDeleteAfter);
+            }
+        }else {
+            nbrElement = 0;
+            retour.clear();
+        }
+
+
+        return new PageImpl<>(retour,pageable,nbrElement);
     }
 }
