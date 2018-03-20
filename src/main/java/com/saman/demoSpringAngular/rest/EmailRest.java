@@ -1,5 +1,6 @@
 package com.saman.demoSpringAngular.rest;
 
+import com.saman.demoSpringAngular.domain.SearchResult;
 import com.saman.demoSpringAngular.entity.Email;
 import com.saman.demoSpringAngular.service.EmailService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -18,7 +19,7 @@ public class EmailRest {
     EmailService service;
 
     @RequestMapping("/search")
-    public Page<Email> getEmailsContentContains(@RequestParam("term") String term,Pageable pageable) {
+    public Page<SearchResult> getEmailsContentContains(@RequestParam("term") String term, Pageable pageable) {
         return service.getEmailsContainingTerm(term, pageable);
     }
 

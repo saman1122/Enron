@@ -12,5 +12,5 @@ public interface EmailRepository extends MongoRepository<Email,String> {
     List<Email> findByFrom(String from);
     List<Email> findByTo(String to);
     Page<Email> findByContentContainingIgnoreCase(String term, Pageable pageable);
-    Page<Email> findByContentContainingOrToContainingOrFromContainingOrCcContainingOrBccContainingOrSubjectContainingAllIgnoreCase(String term1, String term2, String term3, String term4, String term5, String term6, Pageable pageable);
+    List<Email> findTop20000ByContentContainingOrToContainingOrFromContainingOrCcContainingOrBccContainingOrSubjectContainingAllIgnoreCase(String term1, String term2, String term3, String term4, String term5, String term6);
 }

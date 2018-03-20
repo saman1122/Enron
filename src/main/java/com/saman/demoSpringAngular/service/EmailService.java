@@ -1,5 +1,6 @@
 package com.saman.demoSpringAngular.service;
 
+import com.saman.demoSpringAngular.domain.SearchResult;
 import com.saman.demoSpringAngular.entity.Email;
 import com.saman.demoSpringAngular.repository.EmailRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -7,8 +8,12 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageImpl;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
+import org.springframework.util.StringUtils;
 
+import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.stream.Collectors;
 
 @Service
@@ -33,7 +38,20 @@ public class EmailService {
         return emailRepository.findAll(pageable);
     }
 
-    public Page<Email> getEmailsContainingTerm(String term, Pageable pageable) {
-        return emailRepository.findByContentContainingOrToContainingOrFromContainingOrCcContainingOrBccContainingOrSubjectContainingAllIgnoreCase(term,term,term,term,term,term,pageable);
+    public Page<SearchResult> getEmailsContainingTerm(String term, Pageable pageable) {
+        List<SearchResult> retour = new ArrayList<>();
+        HashMap<Email,Integer> occurencesNumber = new HashMap<>();
+        emailRepository.findTop20000ByContentContainingOrToContainingOrFromContainingOrCcContainingOrBccContainingOrSubjectContainingAllIgnoreCase(term,term,term,term,term,term)
+                .stream()
+                .forEach(email -> {
+                    occurencesNumber.put(email,StringUtils.countOccurrencesOf(email.toString().toLowerCase(),term.toLowerCase()));
+                });
+
+        occurencesNumber.entrySet()
+                .stream()
+                .sorted(Map.Entry.<Email, Integer>comparingByValue().reversed())
+                .forEach((k) -> retour.add(new SearchResult(k.getKey(),k.getValue())));
+
+        return new PageImpl<>(retour,pageable,retour.size());
     }
 }
