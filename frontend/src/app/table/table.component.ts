@@ -21,24 +21,16 @@ export class TableComponent implements OnInit {
   public totalElements : number=0;
   public size : number=0;
   emailDetailComponent: MatDialogRef<EmaildetailComponent>;
-  public searchTerm: String = '';
   public search:String;
 
   constructor(public dialog: MatDialog, private service: EmailService, private router: Router ) {  this.search = '';}
 
   ngOnInit() {
-    this.service.getAllEmails()
-    .subscribe( data => {
-      this.searchresults = data.content;
-      this.pages = data.pageable;
-      this.totalPages = data.totalPages;
-      this.totalElements = data.totalElements;
-      this.size = data.size;    
-    });
+    this.pages = new Pageable(0,0,20);
   }
   searchClick(value: String) {
     this.search = value;
-    this.router.navigate(['emaildetail']);
+    this.refresh();
   }
   afficher(email){
     let dialogRef = this.dialog.open(EmaildetailComponent, {
@@ -46,15 +38,19 @@ export class TableComponent implements OnInit {
     });
  }
  gopage(page){
-  this.service.getAllEmailsPage(new Pageable(0,page-1,20))
-  .subscribe( data => {
-    this.searchresults = data.content;
-    this.pages = data.pageable;
-    this.totalPages = data.totalPages;
-    this.totalElements = data.totalElements;
-    this.size = data.size;
-  });
+    this.pages.pageNumber = page-1;
+    this.pages.offset = this.pages.pageNumber*this.pages.pageSize;
+    this.refresh();
+  }
 
-}
-
+  refresh(){
+    this.service.getEmailsPage(this.pages, this.search)
+    .subscribe( data => {
+      this.searchresults = data.content;
+      this.pages = data.pageable;
+      this.totalPages = data.totalPages;
+      this.totalElements = data.totalElements;
+      this.size = data.size;
+    });
+  }
 }

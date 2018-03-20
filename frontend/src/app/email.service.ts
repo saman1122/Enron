@@ -23,8 +23,8 @@ export class EmailService {
     return this.http.get(this.urlApi + '/search?term=' + term);
   }
   
-  getEmailsPage(page): Observable<any> {
-    return this.http.get(this.urlApi + '/search?term=Hello&page='+page.pageNumber+'&size='+page.pageSize);
+  getEmailsPage(page, term): Observable<any> {
+    return this.http.get(this.urlApi + '/search?term='+term+'&page='+page.pageNumber+'&size='+page.pageSize);
   }
 
 }
