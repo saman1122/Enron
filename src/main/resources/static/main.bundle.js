@@ -27,7 +27,7 @@ module.exports = ""
 /***/ "./src/app/all/all.component.html":
 /***/ (function(module, exports) {
 
-module.exports = " \r\n  <div class=\"reglist\">\r\n  <table class=\"table table-striped\">\r\n    <thead>\r\n      <tr>\r\n        <th>#</th>\r\n        <th>Date</th>\r\n        <th>From</th>\r\n        <th>To</th>\r\n        <th>Subject</th>\r\n      </tr>\r\n    </thead>\r\n    <tbody>\r\n      <tr *ngFor=\"let email of emails; let i = index\">\r\n        <th scope=\"row\">{{ i + 1 }}</th>\r\n        <td>{{ email.date }}</td>\r\n        <td>{{ email.from }}</td>\r\n        <td>{{ email.to }}</td>\r\n        <td>{{ email.subject }}</td>\r\n        <td><button type=\"button\" class=\"btn btn-primary\" (click)=\"afficher(email)\">Afficher</button></td>\r\n      </tr>\r\n    </tbody>\r\n  </table>\r\n</div>\r\n <!--\r\n<div class=\"pagination\" *ngIf=\"count > 0\">\r\n   <span>{{ getMin() }} of {{ getMax() }} of {{ count }}</span>\r\n    <span>{{ totalPages() }} pages</span>\r\n    <button (click)=\"onPrev()\" [disabled]=\"page === 1 || loading\">Previous</button>\r\n    <button *ngFor=\"let pageNum of getPages()\" (click)=\"onPage(pageNum)\"></button>\r\n    <button (click)=\"onNext()\" [disabled]=\"lastPage() || loading\">Next</button>\r\n  </div>\r\n-->\r\n  \r\n\r\n<nav aria-label=\"Page navigation example\">\r\n    <ul class=\"pagination justify-content-end\">\r\n      <li class=\"page-item disabled\">\r\n        <a class=\"page-link\" href=\"#\" tabindex=\"-1\">Previous</a>\r\n      </li>\r\n      <li class=\"page-item\"><a class=\"page-link\" (click)=\"gopage(1)\">1</a></li>\r\n      <li class=\"page-item\"><a class=\"page-link\" (click)=\"gopage(2)\">2</a></li>\r\n      <li class=\"page-item\"><a class=\"page-link\" (click)=\"gopage(3)\">3</a></li>\r\n      <li class=\"page-item\">\r\n        <a class=\"page-link\" href=\"#\">Next</a>\r\n      </li>\r\n    </ul>\r\n  </nav>\r\n\r\n"
+module.exports = " \r\n  <div class=\"reglist\">\r\n  <table class=\"table table-striped\">\r\n    <thead>\r\n      <tr>\r\n        <th>#</th>\r\n        <th>Date</th>\r\n        <th>From</th>\r\n        <th>To</th>\r\n        <th>Subject</th>\r\n      </tr>\r\n    </thead>\r\n    <tbody>\r\n      <tr *ngFor=\"let email of emails; let i = index\">\r\n        <th scope=\"row\">{{ i + 1 }}</th>\r\n        <td>{{ email.date }}</td>\r\n        <td>{{ email.from }}</td>\r\n        <td>{{ email.to }}</td>\r\n        <td>{{ email.subject }}</td>\r\n        <td><button type=\"button\" class=\"btn btn-primary\" (click)=\"afficher(email.messageId)\">Afficher</button></td>\r\n      </tr>\r\n    </tbody>\r\n  </table>\r\n</div>\r\n <!--\r\n<div class=\"pagination\" *ngIf=\"count > 0\">\r\n   <span>{{ getMin() }} of {{ getMax() }} of {{ count }}</span>\r\n    <span>{{ totalPages() }} pages</span>\r\n    <button (click)=\"onPrev()\" [disabled]=\"page === 1 || loading\">Previous</button>\r\n    <button *ngFor=\"let pageNum of getPages()\" (click)=\"onPage(pageNum)\"></button>\r\n    <button (click)=\"onNext()\" [disabled]=\"lastPage() || loading\">Next</button>\r\n  </div>\r\n-->\r\n  \r\n\r\n<nav aria-label=\"Page navigation example\">\r\n    <ul class=\"pagination justify-content-end\">\r\n      <li class=\"page-item disabled\">\r\n        <a class=\"page-link\" href=\"#\" tabindex=\"-1\">Previous</a>\r\n      </li>\r\n      <li class=\"page-item\"><a class=\"page-link\" (click)=\"gopage(1)\">1</a></li>\r\n      <li class=\"page-item\"><a class=\"page-link\" (click)=\"gopage(2)\">2</a></li>\r\n      <li class=\"page-item\"><a class=\"page-link\" (click)=\"gopage(3)\">3</a></li>\r\n      <li class=\"page-item\">\r\n        <a class=\"page-link\" href=\"#\">Next</a>\r\n      </li>\r\n    </ul>\r\n  </nav>\r\n\r\n"
 
 /***/ }),
 
@@ -39,6 +39,7 @@ module.exports = " \r\n  <div class=\"reglist\">\r\n  <table class=\"table table
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__angular_core__ = __webpack_require__("./node_modules/@angular/core/esm5/core.js");
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__email_service__ = __webpack_require__("./src/app/email.service.ts");
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__app_pageable_class__ = __webpack_require__("./src/app/app.pageable.class.ts");
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__angular_router__ = __webpack_require__("./node_modules/@angular/router/esm5/router.js");
 var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
     var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
     if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
@@ -51,9 +52,11 @@ var __metadata = (this && this.__metadata) || function (k, v) {
 
 
 
+
 var AllComponent = /** @class */ (function () {
-    function AllComponent(service) {
+    function AllComponent(service, route) {
         this.service = service;
+        this.route = route;
         this.totalPages = 0;
         this.totalElements = 0;
         this.size = 0;
@@ -78,6 +81,9 @@ var AllComponent = /** @class */ (function () {
             _this.size = data.size;
         });
     };
+    AllComponent.prototype.afficher = function (emailId) {
+        this.route.navigate(['/emaildetail'], { queryParams: { id: emailId } });
+    };
     AllComponent = __decorate([
         Object(__WEBPACK_IMPORTED_MODULE_0__angular_core__["n" /* Component */])({
             selector: 'app-all',
@@ -85,7 +91,7 @@ var AllComponent = /** @class */ (function () {
             template: __webpack_require__("./src/app/all/all.component.html"),
             styles: [__webpack_require__("./src/app/all/all.component.css")]
         }),
-        __metadata("design:paramtypes", [__WEBPACK_IMPORTED_MODULE_1__email_service__["a" /* EmailService */]])
+        __metadata("design:paramtypes", [__WEBPACK_IMPORTED_MODULE_1__email_service__["a" /* EmailService */], __WEBPACK_IMPORTED_MODULE_3__angular_router__["b" /* Router */]])
     ], AllComponent);
     return AllComponent;
 }());
@@ -102,6 +108,8 @@ var AllComponent = /** @class */ (function () {
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__home_home_component__ = __webpack_require__("./src/app/home/home.component.ts");
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__table_table_component__ = __webpack_require__("./src/app/table/table.component.ts");
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__all_all_component__ = __webpack_require__("./src/app/all/all.component.ts");
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__emaildetail_emaildetail_component__ = __webpack_require__("./src/app/emaildetail/emaildetail.component.ts");
+
 
 
 
@@ -113,6 +121,10 @@ var routes = [
     {
         path: 'table',
         component: __WEBPACK_IMPORTED_MODULE_1__table_table_component__["a" /* TableComponent */]
+    },
+    {
+        path: 'emaildetail',
+        component: __WEBPACK_IMPORTED_MODULE_3__emaildetail_emaildetail_component__["a" /* EmaildetailComponent */]
     },
     {
         path: 'all',
@@ -220,10 +232,10 @@ var AppModule = /** @class */ (function () {
             ],
             imports: [
                 __WEBPACK_IMPORTED_MODULE_0__angular_platform_browser__["a" /* BrowserModule */],
-                __WEBPACK_IMPORTED_MODULE_4__angular_material__["c" /* MatDialogModule */],
+                __WEBPACK_IMPORTED_MODULE_4__angular_material__["b" /* MatDialogModule */],
                 __WEBPACK_IMPORTED_MODULE_0__angular_platform_browser__["a" /* BrowserModule */],
                 __WEBPACK_IMPORTED_MODULE_5__angular_platform_browser_animations__["a" /* BrowserAnimationsModule */],
-                __WEBPACK_IMPORTED_MODULE_2__angular_router__["b" /* RouterModule */].forRoot(__WEBPACK_IMPORTED_MODULE_3__app_routing_module__["a" /* routes */]),
+                __WEBPACK_IMPORTED_MODULE_2__angular_router__["c" /* RouterModule */].forRoot(__WEBPACK_IMPORTED_MODULE_3__app_routing_module__["a" /* routes */]),
                 __WEBPACK_IMPORTED_MODULE_6__angular_common_http__["b" /* HttpClientModule */]
             ],
             providers: [],
@@ -317,7 +329,7 @@ module.exports = ""
 /***/ "./src/app/emaildetail/emaildetail.component.html":
 /***/ (function(module, exports) {
 
-module.exports = "<div class=\"reglist\">\r\n\r\n<<<<<<< HEAD\r\n    <div class=\"container\">\r\n        <div class=\"row\">\r\n            <div class=\"col-6 col-sm-10\">\r\n                <h2>\r\n                 Message n° {{ email.messageId }} \r\n                </h2>\r\n            </div>\r\n            <div class=\"col-6 col-sm-2\">\r\n                <button type=\"button\" class=\"btn btn-danger\" (click)=\"close()\">Fermer</button>\r\n            </div>\r\n        </div>\r\n=======\r\n   <!-- <div class=\"container\">\r\n        <h2>Message n° {{ email.messageId }} </h2>\r\n>>>>>>> master\r\n        <div class=\"card\">\r\n          <div class=\"card-header\">\r\n              <div class=\"row\">\r\n                  <div class=\"col-6 col-sm-12\">\r\n                    <p><b>Date : </b> {{ email.date }}</p>\r\n                    <p><b>From : </b> {{ email.from }}</p>\r\n                    <p><b>To : </b>{{ email.to }}</p>\r\n                    <p><b>Subject : </b>{{ email.subject }}</p>\r\n                  </div>\r\n                </div>\r\n\r\n          </div>\r\n          <div class=\"card-body\">{{ email.content }}</div> \r\n        </div>\r\n      </div>-->\r\n      test\r\n</div>\r\n<br>"
+module.exports = "<div class=\"reglist\">\r\n    <div class=\"container\">\r\n        <div class=\"row\">\r\n            <div class=\"col-6 col-sm-10\">\r\n                <h2>\r\n                 Message n° {{ email.messageId }} \r\n                </h2>\r\n            </div>\r\n            <div class=\"col-6 col-sm-2\">\r\n                <button type=\"button\" class=\"btn btn-danger\" >Fermer</button>\r\n            </div>\r\n        </div>\r\n\r\n    <div class=\"container\">\r\n        <h2>Message n° {{ email.messageId }} </h2>\r\n        <div class=\"card\">\r\n          <div class=\"card-header\">\r\n              <div class=\"row\">\r\n                  <div class=\"col-6 col-sm-12\">\r\n                    <p><b>Date : </b> {{ email.date }}</p>\r\n                    <p><b>From : </b> {{ email.from }}</p>\r\n                    <p><b>To : </b>{{ email.to }}</p>\r\n                    <p><b>Subject : </b>{{ email.subject }}</p>\r\n                  </div>\r\n                </div>\r\n          </div>\r\n          <div class=\"card-body\">{{ email.content }}</div> \r\n        </div>\r\n      </div>\r\n</div>"
 
 /***/ }),
 
@@ -327,7 +339,7 @@ module.exports = "<div class=\"reglist\">\r\n\r\n<<<<<<< HEAD\r\n    <div class=
 "use strict";
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return EmaildetailComponent; });
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__angular_core__ = __webpack_require__("./node_modules/@angular/core/esm5/core.js");
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__angular_material__ = __webpack_require__("./node_modules/@angular/material/esm5/material.es5.js");
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__angular_router__ = __webpack_require__("./node_modules/@angular/router/esm5/router.js");
 var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
     var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
     if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
@@ -337,21 +349,18 @@ var __decorate = (this && this.__decorate) || function (decorators, target, key,
 var __metadata = (this && this.__metadata) || function (k, v) {
     if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
 };
-var __param = (this && this.__param) || function (paramIndex, decorator) {
-    return function (target, key) { decorator(target, key, paramIndex); }
-};
 
 
 var EmaildetailComponent = /** @class */ (function () {
-    function EmaildetailComponent(dialogRef, data) {
-        this.dialogRef = dialogRef;
-        this.data = data;
-        this.email = data.email;
+    function EmaildetailComponent(router, route) {
+        this.router = router;
+        this.route = route;
     }
     EmaildetailComponent.prototype.ngOnInit = function () {
-    };
-    EmaildetailComponent.prototype.close = function () {
-        this.dialogRef.close();
+        this.route.queryParams.subscribe(function (params) {
+            console.log(params);
+            //this.email.messageId = params['id'];
+        });
     };
     EmaildetailComponent = __decorate([
         Object(__WEBPACK_IMPORTED_MODULE_0__angular_core__["n" /* Component */])({
@@ -359,8 +368,7 @@ var EmaildetailComponent = /** @class */ (function () {
             template: __webpack_require__("./src/app/emaildetail/emaildetail.component.html"),
             styles: [__webpack_require__("./src/app/emaildetail/emaildetail.component.css")]
         }),
-        __param(1, Object(__WEBPACK_IMPORTED_MODULE_0__angular_core__["B" /* Inject */])(__WEBPACK_IMPORTED_MODULE_1__angular_material__["a" /* MAT_DIALOG_DATA */])),
-        __metadata("design:paramtypes", [__WEBPACK_IMPORTED_MODULE_1__angular_material__["d" /* MatDialogRef */], Object])
+        __metadata("design:paramtypes", [__WEBPACK_IMPORTED_MODULE_1__angular_router__["b" /* Router */], __WEBPACK_IMPORTED_MODULE_1__angular_router__["a" /* ActivatedRoute */]])
     ], EmaildetailComponent);
     return EmaildetailComponent;
 }());
@@ -555,7 +563,7 @@ var TableComponent = /** @class */ (function () {
             template: __webpack_require__("./src/app/table/table.component.html"),
             styles: [__webpack_require__("./src/app/table/table.component.css")]
         }),
-        __metadata("design:paramtypes", [__WEBPACK_IMPORTED_MODULE_1__angular_material__["b" /* MatDialog */], __WEBPACK_IMPORTED_MODULE_3__email_service__["a" /* EmailService */], __WEBPACK_IMPORTED_MODULE_4__angular_router__["a" /* Router */]])
+        __metadata("design:paramtypes", [__WEBPACK_IMPORTED_MODULE_1__angular_material__["a" /* MatDialog */], __WEBPACK_IMPORTED_MODULE_3__email_service__["a" /* EmailService */], __WEBPACK_IMPORTED_MODULE_4__angular_router__["b" /* Router */]])
     ], TableComponent);
     return TableComponent;
 }());

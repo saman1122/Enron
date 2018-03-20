@@ -17,7 +17,7 @@
         <td>{{ email.from }}</td>
         <td>{{ email.to }}</td>
         <td>{{ email.subject }}</td>
-        <td><button type="button" class="btn btn-primary" (click)="afficher(email)">Afficher</button></td>
+        <td><button type="button" class="btn btn-primary" (click)="afficher(email.messageId)">Afficher</button></td>
       </tr>
     </tbody>
   </table>
