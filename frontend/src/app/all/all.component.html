@@ -1,15 +1,4 @@
-
-<div class="row">
-    <div class="col-12 col-md-9"></div>
-    <div class="col-6 col-md-3">
-      <form class="form-inline my-5 my-lg-0">
-        <input #searchBox class="form-control mr-sm-2" type="text" placeholder="Search" aria-label="Search">
-        <button class="btn btn-outline-success my-2 my-sm-0" (click)='searchClick(searchBox.value)'>Search</button>
-    </form>
-    <br>
-  </div>
-  </div>
-  
+ 
   <div class="reglist">
   <table class="table table-striped">
     <thead>
@@ -19,17 +8,15 @@
         <th>From</th>
         <th>To</th>
         <th>Subject</th>
-        <th>Occurrence Numbers</th>
       </tr>
     </thead>
     <tbody>
-      <tr *ngFor="let search of searchresults; let i = index">
+      <tr *ngFor="let email of emails; let i = index">
         <th scope="row">{{ i + 1 }}</th>
-        <td>{{ search.email.date }}</td>
-        <td>{{ search.email.from }}</td>
-        <td>{{ search.email.to }}</td>
-        <td>{{ search.email.subject }}</td>
-        <td>{{ search.occurencesNumber }}</td>
+        <td>{{ email.date }}</td>
+        <td>{{ email.from }}</td>
+        <td>{{ email.to }}</td>
+        <td>{{ email.subject }}</td>
         <td><button type="button" class="btn btn-primary" (click)="afficher(email)">Afficher</button></td>
       </tr>
     </tbody>
@@ -50,3 +37,4 @@
       </li>
     </ul>
   </nav>
+

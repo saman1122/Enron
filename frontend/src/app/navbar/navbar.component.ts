@@ -8,17 +8,10 @@ import { RouterLink } from '@angular/router';
 })
 export class NavbarComponent implements OnInit {
 
-  public search:String;
-
   constructor() {
-    this.search = '';
    }
 
   ngOnInit() {
-  }
-
-  searchClick(value: String) {
-    this.search = value;
   }
 
 }
