@@ -11,6 +11,7 @@ import { NavbarComponent } from './navbar/navbar.component';
 import { HomeComponent } from './home/home.component';
 import { TableComponent } from './table/table.component';
 import { EmaildetailComponent } from './emaildetail/emaildetail.component';
+import { AllComponent } from './all/all.component';
 
 
 @NgModule({
@@ -19,7 +20,8 @@ import { EmaildetailComponent } from './emaildetail/emaildetail.component';
     NavbarComponent,
     HomeComponent,
     TableComponent,
-    EmaildetailComponent
+    EmaildetailComponent,
+    AllComponent
   ],
   imports: [
     BrowserModule,
