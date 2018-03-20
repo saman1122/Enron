@@ -26,6 +26,7 @@ public class DemoSpringAngularApplication implements CommandLineRunner {
     @Override
     public void run(String... args) throws Exception {
 
+        /*
         emailRepository.deleteAll();
 
         Dataset enronDataset = new Dataset(DBLP.class.getClassLoader().getResource("enron").getFile());
@@ -53,6 +54,6 @@ public class DemoSpringAngularApplication implements CommandLineRunner {
             }
         }
         emailRepository.saveAll(allEmails);
-
+        */
     }
 }
