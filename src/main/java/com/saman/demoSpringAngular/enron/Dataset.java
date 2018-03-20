@@ -72,10 +72,7 @@ public class Dataset extends info.debatty.java.datasets.Dataset<EmailDataset> {
             return false;
         }
         final Dataset other = (Dataset) obj;
-        if ((this.directory == null) ? (other.directory != null) : !this.directory.equals(other.directory)) {
-            return false;
-        }
-        return true;
+        return (this.directory == null) ? (other.directory == null) : this.directory.equals(other.directory);
     }
 
     

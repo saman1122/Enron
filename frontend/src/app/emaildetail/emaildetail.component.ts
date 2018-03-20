@@ -11,8 +11,7 @@ export class EmaildetailComponent implements OnInit {
   public email : Email;
   constructor(
     public dialogRef: MatDialogRef<EmaildetailComponent>,
-    @Inject(MAT_DIALOG_DATA) public data: any) { this.email = data.email;
-    console.log(this.email.messageId);}
+    @Inject(MAT_DIALOG_DATA) public data: any) { this.email = data.email; }
 
   ngOnInit() {
   }

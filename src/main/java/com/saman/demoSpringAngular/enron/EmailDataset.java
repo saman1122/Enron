@@ -59,7 +59,7 @@ public class EmailDataset implements Serializable {
     String fileSeparator = Pattern.quote(System.getProperty("file.separator"));
 
 
-    EmailDataset(final String raw, final String mailbox) throws MessagingException, Exception {
+    EmailDataset(final String raw, final String mailbox) throws Exception {
         this.raw = raw;
         String[] strings = mailbox.split(fileSeparator, 2);
         this.user = strings[0];
@@ -86,7 +86,7 @@ public class EmailDataset implements Serializable {
         return user;
     }
 
-    public String getFrom() throws Exception {
+    public String getFrom() {
         return from;
     }
 
@@ -102,7 +102,7 @@ public class EmailDataset implements Serializable {
         return strings;
     }
 
-    public List<String> getTo() throws Exception {
+    public List<String> getTo() {
         return to;
     }
 

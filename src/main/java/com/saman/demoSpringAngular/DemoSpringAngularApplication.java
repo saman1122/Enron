@@ -10,6 +10,9 @@ import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 
+import java.util.ArrayList;
+import java.util.List;
+
 @SpringBootApplication
 public class DemoSpringAngularApplication implements CommandLineRunner {
 
@@ -27,10 +30,12 @@ public class DemoSpringAngularApplication implements CommandLineRunner {
 
         Dataset enronDataset = new Dataset(DBLP.class.getClassLoader().getResource("enron").getFile());
 
+        List<Email> allEmails = new ArrayList<>();
+        int i = 0;
         for(EmailDataset email : enronDataset ){
-            Email emailTmp = new Email(
+            i++;
+            allEmails.add(new Email(
                     email.getMessageID(),
-                    email.getRaw(),
                     email.getMailbox(),
                     email.getUser(),
                     email.getFrom(),
@@ -40,9 +45,14 @@ public class DemoSpringAngularApplication implements CommandLineRunner {
                     email.getSubject(),
                     email.getContent(),
                     email.getDate()
-            );
+            ));
 
-            emailRepository.save(emailTmp);
+            if (i%15000 == 0) {
+                emailRepository.saveAll(allEmails);
+                allEmails.clear();
+            }
         }
+        emailRepository.saveAll(allEmails);
+
     }
 }
