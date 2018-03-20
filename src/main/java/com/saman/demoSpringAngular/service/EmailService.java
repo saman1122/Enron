@@ -55,21 +55,6 @@ public class EmailService {
         int toDeleteBefore = pageable.getPageNumber()*pageable.getPageSize();
         int toDeleteAfter = (pageable.getPageNumber()+1)*pageable.getPageSize();
 
-        if (nbrElement > toDeleteBefore) {
-            if (nbrElement > pageable.getPageSize()) {
-                for (int i = 0; i < toDeleteBefore; i++){
-                    retour.remove(0);
-                }
-
-                while (retour.size() > toDeleteAfter)
-                    retour.remove(toDeleteAfter);
-            }
-        }else {
-            nbrElement = 0;
-            retour.clear();
-        }
-
-
-        return new PageImpl<>(retour,pageable,nbrElement);
+        return new PageImpl<>(retour.subList(toDeleteBefore, toDeleteAfter),pageable,nbrElement);
     }
 }
