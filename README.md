@@ -4,10 +4,10 @@ Requirement :
   - install node.js (V9.7.1)  
 
 Execution :  
-  git clone https://...  
-  cd frontend/  
-  npm install  
-  cd ..  
-  mvn install  
-  cd target/  
-  demoSpringAngular-0.0.1-SNAPSHOT.jar
+  - git clone https://...  
+  - cd frontend/  
+  - npm install  
+  - cd ..  
+  - mvn install  
+  - cd target/  
+  - demoSpringAngular-0.0.1-SNAPSHOT.jar
