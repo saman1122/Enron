@@ -6,10 +6,11 @@ import { Email } from '../app.email.class';
 import { Router } from "@angular/router";
 import { Pageable } from '../app.pageable.class';
 import { Searchresult } from '../app.search-result.class';
+import { PaginerService } from '../paginer.service';
 
 @Component({
   selector: 'app-table',
-  providers: [EmailService],
+  providers: [EmailService, PaginerService],
   templateUrl: './table.component.html',
   styleUrls: ['./table.component.css']
 })
@@ -19,9 +20,10 @@ export class TableComponent implements OnInit {
   public totalPages: number = 0;
   public totalElements: number = 0;
   public size: number = 0;
+  public pagesToShow: Range;
   public search: String;
 
-  constructor(private service: EmailService, private route: Router) { this.search = ''; }
+  constructor(private service: EmailService, private route: Router, private servicePage: PaginerService) { this.search = ''; }
 
   ngOnInit() {
     this.pages = new Pageable(0, 0, 20);
@@ -34,8 +36,12 @@ export class TableComponent implements OnInit {
   afficher(emailId) {
     this.route.navigate(['/emaildetail'], { queryParams: { id: emailId } });
   }
-  
-  gopage(page) {
+
+  gopage(page: number) {
+    if (page < 1 || page > this.totalPages) {
+      return;
+    }
+
     this.pages.pageNumber = page - 1;
     this.pages.offset = this.pages.pageNumber * this.pages.pageSize;
     this.refresh();
@@ -49,6 +55,9 @@ export class TableComponent implements OnInit {
         this.totalPages = data.totalPages;
         this.totalElements = data.totalElements;
         this.size = data.size;
+        this.pagesToShow = this.servicePage.getPager(this.totalElements,this.totalPages,(this.pages.pageNumber + 1),this.pages.pageSize);
       });
   }
+
+  
 }

@@ -27,7 +27,7 @@ module.exports = ""
 /***/ "./src/app/all/all.component.html":
 /***/ (function(module, exports) {
 
-module.exports = " \r\n  <div class=\"reglist\">\r\n  <table class=\"table table-striped\">\r\n    <thead>\r\n      <tr>\r\n        <th>#</th>\r\n        <th>Date</th>\r\n        <th>From</th>\r\n        <th>To</th>\r\n        <th>Subject</th>\r\n      </tr>\r\n    </thead>\r\n    <tbody>\r\n      <tr *ngFor=\"let email of emails; let i = index\">\r\n        <th scope=\"row\">{{ i + 1 }}</th>\r\n        <td>{{ email.date }}</td>\r\n        <td>{{ email.from }}</td>\r\n        <td>{{ email.to }}</td>\r\n        <td>{{ email.subject }}</td>\r\n        <td><button type=\"button\" class=\"btn btn-primary\" (click)=\"afficher(email.messageId)\">Afficher</button></td>\r\n      </tr>\r\n    </tbody>\r\n  </table>\r\n</div>\r\n <!--\r\n<div class=\"pagination\" *ngIf=\"count > 0\">\r\n   <span>{{ getMin() }} of {{ getMax() }} of {{ count }}</span>\r\n    <span>{{ totalPages() }} pages</span>\r\n    <button (click)=\"onPrev()\" [disabled]=\"page === 1 || loading\">Previous</button>\r\n    <button *ngFor=\"let pageNum of getPages()\" (click)=\"onPage(pageNum)\"></button>\r\n    <button (click)=\"onNext()\" [disabled]=\"lastPage() || loading\">Next</button>\r\n  </div>\r\n-->\r\n  \r\n\r\n<nav aria-label=\"Page navigation example\">\r\n    <ul class=\"pagination justify-content-end\">\r\n      <li class=\"page-item disabled\">\r\n        <a class=\"page-link\" href=\"#\" tabindex=\"-1\">Previous</a>\r\n      </li>\r\n      <li class=\"page-item\"><a class=\"page-link\" (click)=\"gopage(1)\">1</a></li>\r\n      <li class=\"page-item\"><a class=\"page-link\" (click)=\"gopage(2)\">2</a></li>\r\n      <li class=\"page-item\"><a class=\"page-link\" (click)=\"gopage(3)\">3</a></li>\r\n      <li class=\"page-item\">\r\n        <a class=\"page-link\" href=\"#\">Next</a>\r\n      </li>\r\n    </ul>\r\n  </nav>\r\n\r\n"
+module.exports = " \r\n  <div class=\"reglist\">\r\n  <table class=\"table table-striped\">\r\n    <thead>\r\n      <tr>\r\n        <th>#</th>\r\n        <th>Date</th>\r\n        <th>From</th>\r\n        <th>To</th>\r\n        <th>Subject</th>\r\n      </tr>\r\n    </thead>\r\n    <tbody>\r\n      <tr *ngFor=\"let email of emails; let i = index\">\r\n        <th scope=\"row\">{{ i + 1 }}</th>\r\n        <td>{{ email.date }}</td>\r\n        <td>{{ email.from }}</td>\r\n        <td>{{ email.to }}</td>\r\n        <td>{{ email.subject }}</td>\r\n        <td><button type=\"button\" class=\"btn btn-primary\" (click)=\"afficher(email.messageId)\">Afficher</button></td>\r\n      </tr>\r\n    </tbody>\r\n  </table>\r\n</div>\r\n\r\n<!-- pager -->\r\n<nav>\r\n  <ul class=\"pagination justify-content-end\" *ngIf=\"pagesToShow && pagesToShow.length\">\r\n    <li class=\"page-item\" [ngClass]=\"{disabled:pages.pageNumber === 0}\">\r\n      <a class=\"page-link\" (click)=\"gopage(1)\">First</a>\r\n    </li>\r\n    <li class=\"page-item\" [ngClass]=\"{disabled:pages.pageNumber === 0}\">\r\n      <a class=\"page-link\" (click)=\"gopage(pages.pageNumber)\">Previous</a>\r\n    </li>\r\n    <li class=\"page-item\" *ngFor=\"let page of pagesToShow\" [ngClass]=\"{active:pages.pageNumber + 1 === page}\">\r\n      <a class=\"page-link\" (click)=\"gopage(page)\">{{page}}</a>\r\n    </li>\r\n    <li class=\"page-item\" [ngClass]=\"{disabled:pages.pageNumber + 1 === totalPages}\">\r\n      <a class=\"page-link\" (click)=\"gopage(pages.pageNumber + 2)\">Next</a>\r\n    </li>\r\n    <li class=\"page-item\" [ngClass]=\"{disabled:pages.pageNumber + 1 === totalPages}\">\r\n      <a class=\"page-link\" (click)=\"gopage(totalPages)\">Last</a>\r\n    </li>\r\n  </ul>\r\n</nav>"
 
 /***/ }),
 
@@ -40,6 +40,7 @@ module.exports = " \r\n  <div class=\"reglist\">\r\n  <table class=\"table table
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__email_service__ = __webpack_require__("./src/app/email.service.ts");
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__app_pageable_class__ = __webpack_require__("./src/app/app.pageable.class.ts");
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__angular_router__ = __webpack_require__("./node_modules/@angular/router/esm5/router.js");
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__paginer_service__ = __webpack_require__("./src/app/paginer.service.ts");
 var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
     var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
     if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
@@ -53,10 +54,12 @@ var __metadata = (this && this.__metadata) || function (k, v) {
 
 
 
+
 var AllComponent = /** @class */ (function () {
-    function AllComponent(service, route) {
+    function AllComponent(service, route, servicePage) {
         this.service = service;
         this.route = route;
+        this.servicePage = servicePage;
         this.totalPages = 0;
         this.totalElements = 0;
         this.size = 0;
@@ -66,6 +69,9 @@ var AllComponent = /** @class */ (function () {
         this.refresh();
     };
     AllComponent.prototype.gopage = function (page) {
+        if (page < 1 || page > this.totalPages) {
+            return;
+        }
         this.pages.pageNumber = page - 1;
         this.pages.offset = this.pages.pageNumber * this.pages.pageSize;
         this.refresh();
@@ -79,6 +85,7 @@ var AllComponent = /** @class */ (function () {
             _this.totalPages = data.totalPages;
             _this.totalElements = data.totalElements;
             _this.size = data.size;
+            _this.pagesToShow = _this.servicePage.getPager(_this.totalElements, _this.totalPages, (_this.pages.pageNumber + 1), _this.pages.pageSize);
         });
     };
     AllComponent.prototype.afficher = function (emailId) {
@@ -87,11 +94,11 @@ var AllComponent = /** @class */ (function () {
     AllComponent = __decorate([
         Object(__WEBPACK_IMPORTED_MODULE_0__angular_core__["n" /* Component */])({
             selector: 'app-all',
-            providers: [__WEBPACK_IMPORTED_MODULE_1__email_service__["a" /* EmailService */]],
+            providers: [__WEBPACK_IMPORTED_MODULE_1__email_service__["a" /* EmailService */], __WEBPACK_IMPORTED_MODULE_4__paginer_service__["a" /* PaginerService */]],
             template: __webpack_require__("./src/app/all/all.component.html"),
             styles: [__webpack_require__("./src/app/all/all.component.css")]
         }),
-        __metadata("design:paramtypes", [__WEBPACK_IMPORTED_MODULE_1__email_service__["a" /* EmailService */], __WEBPACK_IMPORTED_MODULE_3__angular_router__["b" /* Router */]])
+        __metadata("design:paramtypes", [__WEBPACK_IMPORTED_MODULE_1__email_service__["a" /* EmailService */], __WEBPACK_IMPORTED_MODULE_3__angular_router__["b" /* Router */], __WEBPACK_IMPORTED_MODULE_4__paginer_service__["a" /* PaginerService */]])
     ], AllComponent);
     return AllComponent;
 }());
@@ -450,7 +457,7 @@ module.exports = ""
 /***/ "./src/app/navbar/navbar.component.html":
 /***/ (function(module, exports) {
 
-module.exports = "<nav class=\"navbar navbar-expand-md navbar-dark bg-dark fixed-top\">\r\n  <div class=\"collapse navbar-collapse\" id=\"navbarsExampleDefault\">\r\n    <ul class=\"navbar-nav mr-auto\">\r\n      <li class=\"nav-item\">\r\n        <a class=\"nav-link\" routerLink=\"\">Home\r\n          <span class=\"sr-only\">(current)</span>\r\n        </a>\r\n      </li>\r\n      <li>\r\n        <a class=\"nav-link\" routerLink=\"table\">Result</a>\r\n      </li>\r\n      <li>\r\n          <a class=\"nav-link\" routerLink=\"all\">All</a>\r\n      </li>  \r\n    </ul>\r\n    <span class=\"navbar-text\">\r\n        <h4>Easy Search</h4>\r\n      </span>\r\n  </div>\r\n</nav>"
+module.exports = "<nav class=\"navbar navbar-expand-md navbar-dark bg-dark fixed-top\">\r\n  <div class=\"collapse navbar-collapse\" id=\"navbarsExampleDefault\">\r\n    <ul class=\"navbar-nav mr-auto\">\r\n      <li class=\"nav-item\">\r\n        <a class=\"nav-link\" routerLink=\"\">Home\r\n          <span class=\"sr-only\">(current)</span>\r\n        </a>\r\n      </li>\r\n      <li>\r\n        <a class=\"nav-link\" routerLink=\"table\">Search</a>\r\n      </li>\r\n      <li>\r\n          <a class=\"nav-link\" routerLink=\"all\">All</a>\r\n      </li>  \r\n    </ul>\r\n    <span class=\"navbar-text\">\r\n        <h4>Easy Search</h4>\r\n      </span>\r\n  </div>\r\n</nav>"
 
 /***/ }),
 
@@ -490,6 +497,69 @@ var NavbarComponent = /** @class */ (function () {
 
 /***/ }),
 
+/***/ "./src/app/paginer.service.ts":
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return PaginerService; });
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__angular_core__ = __webpack_require__("./node_modules/@angular/core/esm5/core.js");
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_underscore__ = __webpack_require__("./node_modules/underscore/underscore.js");
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_underscore___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_1_underscore__);
+var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
+    var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
+    if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
+    else for (var i = decorators.length - 1; i >= 0; i--) if (d = decorators[i]) r = (c < 3 ? d(r) : c > 3 ? d(target, key, r) : d(target, key)) || r;
+    return c > 3 && r && Object.defineProperty(target, key, r), r;
+};
+var __metadata = (this && this.__metadata) || function (k, v) {
+    if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
+};
+
+
+var PaginerService = /** @class */ (function () {
+    function PaginerService() {
+    }
+    PaginerService.prototype.getPager = function (totalItems, totalPages, currentPage, pageSize) {
+        if (currentPage === void 0) { currentPage = 1; }
+        if (pageSize === void 0) { pageSize = 20; }
+        var startPage, endPage;
+        if (totalPages <= 10) {
+            // less than 10 total pages so show all
+            startPage = 1;
+            endPage = totalPages;
+        }
+        else {
+            // more than 10 total pages so calculate start and end pages
+            if (currentPage <= 6) {
+                startPage = 1;
+                endPage = 10;
+            }
+            else if (currentPage + 4 >= totalPages) {
+                startPage = totalPages - 9;
+                endPage = totalPages;
+            }
+            else {
+                startPage = currentPage - 5;
+                endPage = currentPage + 4;
+            }
+        }
+        // calculate start and end item indexes
+        var startIndex = (currentPage - 1) * pageSize;
+        var endIndex = Math.min(startIndex + pageSize - 1, totalItems - 1);
+        // create an array of pages to ng-repeat in the pager control
+        return __WEBPACK_IMPORTED_MODULE_1_underscore__["range"](startPage, endPage + 1);
+    };
+    PaginerService = __decorate([
+        Object(__WEBPACK_IMPORTED_MODULE_0__angular_core__["C" /* Injectable */])(),
+        __metadata("design:paramtypes", [])
+    ], PaginerService);
+    return PaginerService;
+}());
+
+
+
+/***/ }),
+
 /***/ "./src/app/table/table.component.css":
 /***/ (function(module, exports) {
 
@@ -500,7 +570,7 @@ module.exports = ""
 /***/ "./src/app/table/table.component.html":
 /***/ (function(module, exports) {
 
-module.exports = "<div class=\"row\">\r\n  <div class=\"col-12 col-md-9\"></div>\r\n  <div class=\"col-6 col-md-3\">\r\n    <input #searchBox class=\"form-control mr-sm-2\" type=\"text\" placeholder=\"Search\" aria-label=\"Search\">\r\n    <button class=\"btn btn-outline-success my-2 my-sm-0\" (click)='searchClick(searchBox.value)'>Search</button>\r\n    <br>\r\n  </div>\r\n</div>\r\n\r\n<div class=\"reglist\">\r\n  <table class=\"table table-striped\">\r\n    <thead>\r\n      <tr>\r\n        <th>#</th>\r\n        <th>Date</th>\r\n        <th>From</th>\r\n        <th>To</th>\r\n        <th>Subject</th>\r\n        <th>Score</th>\r\n        <th>Occurrence Numbers</th>\r\n      </tr>\r\n    </thead>\r\n    <tbody>\r\n      <tr *ngFor=\"let search of searchresults; let i = index\">\r\n        <th scope=\"row\">{{ i + 1 }}</th>\r\n        <td>{{ search.email.date }}</td>\r\n        <td>{{ search.email.from }}</td>\r\n        <td>{{ search.email.to }}</td>\r\n        <td>{{ search.email.subject }}</td>\r\n        <td>{{ search.score }}</td>\r\n        <td>{{ search.occurencesNumber }}</td>\r\n        <td>\r\n          <button type=\"button\" class=\"btn btn-primary\" (click)=\"afficher(search.email.messageId)\">Afficher</button>\r\n        </td>\r\n      </tr>\r\n    </tbody>\r\n  </table>\r\n</div>\r\n\r\n\r\n<nav aria-label=\"Page navigation example\">\r\n  <ul class=\"pagination justify-content-end\">\r\n    <li class=\"page-item disabled\">\r\n      <a class=\"page-link\" href=\"#\" tabindex=\"-1\">Previous</a>\r\n    </li>\r\n    <li class=\"page-item\">\r\n      <a class=\"page-link\" (click)=\"gopage(1)\">1</a>\r\n    </li>\r\n    <li class=\"page-item\">\r\n      <a class=\"page-link\" (click)=\"gopage(2)\">2</a>\r\n    </li>\r\n    <li class=\"page-item\">\r\n      <a class=\"page-link\" (click)=\"gopage(3)\">3</a>\r\n    </li>\r\n    <li class=\"page-item\">\r\n      <a class=\"page-link\" href=\"#\">Next</a>\r\n    </li>\r\n  </ul>\r\n</nav>"
+module.exports = "<div class=\"row\">\r\n  <div class=\"col-12 col-md-9\"></div>\r\n  <div class=\"col-6 col-md-3\">\r\n    <input #searchBox class=\"form-control mr-sm-2\" type=\"text\" placeholder=\"Search\" aria-label=\"Search\">\r\n    <button class=\"btn btn-outline-success my-2 my-sm-0\" (click)='searchClick(searchBox.value)'>Search</button>\r\n    <br>\r\n  </div>\r\n</div>\r\n\r\n<div class=\"reglist\">\r\n  <table class=\"table table-striped\">\r\n    <thead>\r\n      <tr>\r\n        <th>#</th>\r\n        <th>Date</th>\r\n        <th>From</th>\r\n        <th>To</th>\r\n        <th>Subject</th>\r\n        <th>Score</th>\r\n        <th>Occurrence Numbers</th>\r\n      </tr>\r\n    </thead>\r\n    <tbody>\r\n      <tr *ngFor=\"let search of searchresults; let i = index\">\r\n        <th scope=\"row\">{{ i + 1 }}</th>\r\n        <td>{{ search.email.date }}</td>\r\n        <td>{{ search.email.from }}</td>\r\n        <td>{{ search.email.to }}</td>\r\n        <td>{{ search.email.subject }}</td>\r\n        <td>{{ search.score }}</td>\r\n        <td>{{ search.occurencesNumber }}</td>\r\n        <td>\r\n          <button type=\"button\" class=\"btn btn-primary\" (click)=\"afficher(search.email.messageId)\">Afficher</button>\r\n        </td>\r\n      </tr>\r\n    </tbody>\r\n  </table>\r\n</div>\r\n\r\n<!-- pager -->\r\n<nav>\r\n  <ul class=\"pagination justify-content-end\" *ngIf=\"pagesToShow && pagesToShow.length\">\r\n    <li class=\"page-item\" [ngClass]=\"{disabled:pages.pageNumber === 0}\">\r\n      <a class=\"page-link\" (click)=\"gopage(1)\">First</a>\r\n    </li>\r\n    <li class=\"page-item\" [ngClass]=\"{disabled:pages.pageNumber === 0}\">\r\n      <a class=\"page-link\" (click)=\"gopage(pages.pageNumber)\">Previous</a>\r\n    </li>\r\n    <li class=\"page-item\" *ngFor=\"let page of pagesToShow\" [ngClass]=\"{active:pages.pageNumber + 1 === page}\">\r\n      <a class=\"page-link\" (click)=\"gopage(page)\">{{page}}</a>\r\n    </li>\r\n    <li class=\"page-item\" [ngClass]=\"{disabled:pages.pageNumber + 1 === totalPages}\">\r\n      <a class=\"page-link\" (click)=\"gopage(pages.pageNumber + 2)\">Next</a>\r\n    </li>\r\n    <li class=\"page-item\" [ngClass]=\"{disabled:pages.pageNumber + 1 === totalPages}\">\r\n      <a class=\"page-link\" (click)=\"gopage(totalPages)\">Last</a>\r\n    </li>\r\n  </ul>\r\n</nav>"
 
 /***/ }),
 
@@ -513,6 +583,7 @@ module.exports = "<div class=\"row\">\r\n  <div class=\"col-12 col-md-9\"></div>
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__email_service__ = __webpack_require__("./src/app/email.service.ts");
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__angular_router__ = __webpack_require__("./node_modules/@angular/router/esm5/router.js");
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__app_pageable_class__ = __webpack_require__("./src/app/app.pageable.class.ts");
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__paginer_service__ = __webpack_require__("./src/app/paginer.service.ts");
 var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
     var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
     if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
@@ -526,10 +597,12 @@ var __metadata = (this && this.__metadata) || function (k, v) {
 
 
 
+
 var TableComponent = /** @class */ (function () {
-    function TableComponent(service, route) {
+    function TableComponent(service, route, servicePage) {
         this.service = service;
         this.route = route;
+        this.servicePage = servicePage;
         this.searchresults = [];
         this.totalPages = 0;
         this.totalElements = 0;
@@ -547,6 +620,9 @@ var TableComponent = /** @class */ (function () {
         this.route.navigate(['/emaildetail'], { queryParams: { id: emailId } });
     };
     TableComponent.prototype.gopage = function (page) {
+        if (page < 1 || page > this.totalPages) {
+            return;
+        }
         this.pages.pageNumber = page - 1;
         this.pages.offset = this.pages.pageNumber * this.pages.pageSize;
         this.refresh();
@@ -560,16 +636,17 @@ var TableComponent = /** @class */ (function () {
             _this.totalPages = data.totalPages;
             _this.totalElements = data.totalElements;
             _this.size = data.size;
+            _this.pagesToShow = _this.servicePage.getPager(_this.totalElements, _this.totalPages, (_this.pages.pageNumber + 1), _this.pages.pageSize);
         });
     };
     TableComponent = __decorate([
         Object(__WEBPACK_IMPORTED_MODULE_0__angular_core__["n" /* Component */])({
             selector: 'app-table',
-            providers: [__WEBPACK_IMPORTED_MODULE_1__email_service__["a" /* EmailService */]],
+            providers: [__WEBPACK_IMPORTED_MODULE_1__email_service__["a" /* EmailService */], __WEBPACK_IMPORTED_MODULE_4__paginer_service__["a" /* PaginerService */]],
             template: __webpack_require__("./src/app/table/table.component.html"),
             styles: [__webpack_require__("./src/app/table/table.component.css")]
         }),
-        __metadata("design:paramtypes", [__WEBPACK_IMPORTED_MODULE_1__email_service__["a" /* EmailService */], __WEBPACK_IMPORTED_MODULE_2__angular_router__["b" /* Router */]])
+        __metadata("design:paramtypes", [__WEBPACK_IMPORTED_MODULE_1__email_service__["a" /* EmailService */], __WEBPACK_IMPORTED_MODULE_2__angular_router__["b" /* Router */], __WEBPACK_IMPORTED_MODULE_4__paginer_service__["a" /* PaginerService */]])
     ], TableComponent);
     return TableComponent;
 }());

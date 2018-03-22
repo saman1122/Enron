@@ -49,7 +49,8 @@ public class EmailService {
     }
 
     public Page<Email> listAllByPage(Pageable pageable){
-        return emailRepository.findAll(pageable);
+        Page<Email> page = emailRepository.findAll(pageable);
+        return new PageImpl<Email>(page.getContent(),pageable,page.getTotalElements());
     }
 
     @Deprecated
