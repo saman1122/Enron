@@ -1,45 +1,65 @@
 package com.saman.demoSpringAngular.service;
 
+import com.fasterxml.jackson.databind.ObjectMapper;
 import com.saman.demoSpringAngular.domain.SearchResult;
 import com.saman.demoSpringAngular.entity.Email;
 import com.saman.demoSpringAngular.repository.EmailRepository;
+import org.elasticsearch.action.search.SearchResponse;
+import org.elasticsearch.index.query.MultiMatchQueryBuilder;
+import org.elasticsearch.search.SearchHit;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.*;
+import org.springframework.data.elasticsearch.core.ElasticsearchTemplate;
 import org.springframework.stereotype.Service;
 import org.springframework.util.StringUtils;
 
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-import java.util.stream.Collectors;
 
 @Service
 public class EmailService {
 
     @Autowired
     EmailRepository emailRepository;
+    @Autowired
+    ElasticsearchTemplate template;
 
-    @Deprecated
-    public Page<Email> getEmailFindByTerm(String term, Pageable pageable) {
-        List<Email> filtered = emailRepository.findAll().parallelStream().filter(t->
-                t.to.stream().anyMatch(to -> to.contains(term)) || t.mailbox.contains(term) || t.from.contains(term)
-                        || t.date.toString().contains(term) || t.subject.contains(term)
-                        || t.content.contains(term) || t.cc.stream().anyMatch(cc -> cc.contains(term))
-                        || t.bcc.stream().anyMatch(bcc -> bcc.contains(term)) || t.user.contains(term)
-        ).collect(Collectors.toList());
+    public Page<SearchResult> getEmailFindByTerm(String term, Pageable pageable) {
+        List<SearchResult> retour = new ArrayList<>();
+        ObjectMapper objectMapper = new ObjectMapper();
+        SearchResponse searchResponse = template.getClient().prepareSearch("email")
+                .setQuery(new MultiMatchQueryBuilder(term,"content","from","to","cc","bcc","mailbox","messageId","user","subject"))
+                .setFrom(pageable.getPageNumber()*pageable.getPageSize()).setSize(pageable.getPageSize()).setExplain(true)
+                .execute()
+                .actionGet();
 
-        return new PageImpl<>(filtered,pageable,filtered.size());
+        for(SearchHit hit : searchResponse.getHits()){
+            try {
+                String source = hit.getSourceAsString();
+                Email email = objectMapper.readValue(source,Email.class);
+                Integer occurencesNumber = StringUtils.countOccurrencesOf(email.toString().toLowerCase(),term.toLowerCase());
+                float score = hit.getExplanation().getValue();
+                retour.add(new SearchResult(email,occurencesNumber,score));
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+        }
+
+        return new PageImpl<>(retour,pageable,searchResponse.getHits().totalHits);
     }
 
     public Page<Email> listAllByPage(Pageable pageable){
         return emailRepository.findAll(pageable);
     }
 
+    @Deprecated
     public Page<SearchResult> getEmailsContainingTerm(String term, Pageable pageable) {
         List<SearchResult> retour = new ArrayList<>();
         HashMap<Email,Integer> occurencesNumber = new HashMap<>();
-        emailRepository.findTop20000ByContentContainingOrToContainingOrFromContainingOrCcContainingOrBccContainingOrSubjectContainingAllIgnoreCase(term,term,term,term,term,term)
+        emailRepository.findByContentContainingOrToContainingOrFromContainingOrCcContainingOrBccContainingOrSubjectContainingAllIgnoreCase(term,term,term,term,term,term)
                 .forEach(email -> {
                     occurencesNumber.put(email,StringUtils.countOccurrencesOf(email.toString().toLowerCase(),term.toLowerCase()));
                 });
@@ -47,7 +67,7 @@ public class EmailService {
         occurencesNumber.entrySet()
                 .stream()
                 .sorted(Map.Entry.<Email, Integer>comparingByValue().reversed())
-                .forEach((k) -> retour.add(new SearchResult(k.getKey(),k.getValue())));
+                .forEach((k) -> retour.add(new SearchResult(k.getKey(),k.getValue(),0f)));
 
 
         // Create new Page
@@ -56,5 +76,9 @@ public class EmailService {
         int toDeleteAfter = (pageable.getPageNumber()+1)*pageable.getPageSize();
 
         return new PageImpl<>(retour.subList(toDeleteBefore, toDeleteAfter),pageable,nbrElement);
+    }
+
+    public Email getOneById(String id) {
+        return emailRepository.findByMessageId(id);
     }
 }

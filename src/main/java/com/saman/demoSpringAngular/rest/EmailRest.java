@@ -6,10 +6,7 @@ import com.saman.demoSpringAngular.service.EmailService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 @RestController
 @RequestMapping("/api")
@@ -20,11 +17,16 @@ public class EmailRest {
 
     @RequestMapping("/search")
     public Page<SearchResult> getEmailsContentContains(@RequestParam("term") String term, Pageable pageable) {
-        return service.getEmailsContainingTerm(term, pageable);
+        return service.getEmailFindByTerm(term, pageable);
     }
 
     @RequestMapping(value="/all",method= RequestMethod.GET)
     public Page<Email> getAllEmailsByPage(Pageable pageable) {
         return service.listAllByPage(pageable);
+    }
+
+    @RequestMapping(value="/email/{messageId}",method= RequestMethod.GET)
+    public Email getOneEmailById(@PathVariable String messageId){
+        return service.getOneById(messageId);
     }
 }

@@ -1,24 +1,22 @@
 package com.saman.demoSpringAngular.entity;
 
 import org.springframework.data.annotation.Id;
-import org.springframework.data.mongodb.core.index.Indexed;
+import org.springframework.data.elasticsearch.annotations.Document;
 
 import java.util.Date;
 import java.util.List;
 
+@Document(indexName = "email")
 public class Email {
     @Id
     public String messageId;
     public String mailbox;
     public String user;
-    @Indexed
     public String from;
-    @Indexed
     public List<String> to;
     public List<String> cc;
     public List<String> bcc;
     public String subject;
-    @Indexed
     public String content;
     public Date date;
 
