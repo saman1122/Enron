@@ -3,10 +3,11 @@ import { EmaildetailComponent } from '../emaildetail/emaildetail.component';
 import { EmailService } from '../email.service';
 import { Observable } from 'rxjs/Rx';
 import { Email } from '../app.email.class';
-import { Router } from "@angular/router";
+import { ActivatedRoute } from "@angular/router";
 import { Pageable } from '../app.pageable.class';
 import { Searchresult } from '../app.search-result.class';
 import { PaginerService } from '../paginer.service';
+import { NgModel } from '@angular/forms';
 
 @Component({
   selector: 'app-table',
@@ -21,20 +22,19 @@ export class TableComponent implements OnInit {
   public totalElements: number = 0;
   public size: number = 0;
   public pagesToShow: Range;
-  public search: String;
+  public search: String = '';
+  public possibleSize: number[] = [ 10, 20, 50, 100, 200];
 
-  constructor(private service: EmailService, private route: Router, private servicePage: PaginerService) { this.search = ''; }
+  constructor(private service: EmailService, private route: ActivatedRoute, private servicePage: PaginerService) {
+    this.pages = new Pageable();
+  }
 
   ngOnInit() {
-    this.pages = new Pageable(0, 0, 20);
-  }
-  searchClick(value: String) {
-    this.search = value;
-    this.refresh();
-  }
-
-  afficher(emailId) {
-    this.route.navigate(['/emaildetail'], { queryParams: { id: emailId } });
+    this.route.queryParams
+      .subscribe(params => {
+        this.search = params.term; this.pages.init();
+        this.refresh();
+      });
   }
 
   gopage(page: number) {
@@ -55,9 +55,7 @@ export class TableComponent implements OnInit {
         this.totalPages = data.totalPages;
         this.totalElements = data.totalElements;
         this.size = data.size;
-        this.pagesToShow = this.servicePage.getPager(this.totalElements,this.totalPages,(this.pages.pageNumber + 1),this.pages.pageSize);
+        this.pagesToShow = this.servicePage.getPager(this.totalElements, this.totalPages, (this.pages.pageNumber + 1), this.pages.pageSize);
       });
   }
-
-  
 }

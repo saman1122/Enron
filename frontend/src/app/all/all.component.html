@@ -1,5 +1,4 @@
- 
-  <div class="reglist">
+<div class="reglist">
   <table class="table table-striped">
     <thead>
       <tr>
@@ -17,10 +16,18 @@
         <td>{{ email.from }}</td>
         <td>{{ email.to }}</td>
         <td>{{ email.subject }}</td>
-        <td><button type="button" class="btn btn-primary" (click)="afficher(email.messageId)">Afficher</button></td>
+        <td>
+          <button type="button" class="btn btn-primary" routerLink="/emaildetail/{{email.messageId}}">Afficher</button>
+        </td>
       </tr>
     </tbody>
   </table>
+</div>
+
+<div>
+  <span>Total elements: {{totalElements}}</span>
+  <span>Total pages: {{totalPages}}</span>
+  <span>Size: {{size}}</span>
 </div>
 
 <!-- pager -->

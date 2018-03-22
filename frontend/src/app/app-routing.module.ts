@@ -6,20 +6,20 @@ import { AllComponent } from './all/all.component';
 import { EmaildetailComponent } from './emaildetail/emaildetail.component';
 
 export const routes: Routes = [
-    {
-      path: '',
-      component: HomeComponent
-    },
-    {
-      path: 'table',
-      component: TableComponent
-    },
-    {
-      path: 'emaildetail',
-      component: EmaildetailComponent
-    },
-    {
-  path: 'all',
-      component: AllComponent
-    }
-  ];
+  {
+    path: '',
+    component: HomeComponent
+  },
+  {
+    path: 'table',
+    component: TableComponent
+  },
+  {
+    path: 'emaildetail/:id',
+    component: EmaildetailComponent
+  },
+  {
+    path: 'all',
+    component: AllComponent
+  }
+];

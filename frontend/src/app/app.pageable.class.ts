@@ -1,7 +1,15 @@
 export class Pageable {
-    constructor(
-      public offset : number = 0,
-      public pageNumber : number= 0,
-      public pageSize : number=20,
-    ) { }
+  public offset: number;
+  public pageNumber: number;
+  public pageSize: number;
+
+  constructor(offset: number = 0, pageNumber: number = 0,  pageSize: number = 20) {
+    this.init(offset,pageNumber,pageSize);
+   }
+
+   public init(offset: number = 0, pageNumber: number = 0,  pageSize: number = 20) {
+    this.offset = offset;
+    this.pageNumber = pageNumber;
+    this.pageSize = pageSize;
+   }
 }

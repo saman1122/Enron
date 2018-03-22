@@ -3,7 +3,6 @@ import { EmaildetailComponent } from '../emaildetail/emaildetail.component';
 import { EmailService } from '../email.service';
 import { Email } from '../app.email.class';
 import { Pageable } from '../app.pageable.class';
-import { Router } from '@angular/router';
 import { PaginerService } from '../paginer.service';
 
 
@@ -22,10 +21,11 @@ export class AllComponent implements OnInit {
   public size: number = 0;
   public pagesToShow: Range;
 
-  constructor(private service: EmailService, private route: Router, private servicePage: PaginerService) { }
+  constructor(private service: EmailService, private servicePage: PaginerService) {
+    this.pages = new Pageable();
+  }
 
   ngOnInit() {
-    this.pages = new Pageable(0, 0, 20);
     this.refresh();
   }
 
@@ -46,12 +46,8 @@ export class AllComponent implements OnInit {
         this.pages = data.pageable;
         this.totalPages = data.totalPages;
         this.totalElements = data.totalElements;
-        this.size = data.size;        
-        this.pagesToShow = this.servicePage.getPager(this.totalElements,this.totalPages,(this.pages.pageNumber + 1),this.pages.pageSize);
+        this.size = data.size;
+        this.pagesToShow = this.servicePage.getPager(this.totalElements, this.totalPages, (this.pages.pageNumber + 1), this.pages.pageSize);
       });
-  }
-
-  afficher(emailId) {
-    this.route.navigate(['/emaildetail'], { queryParams: { id: emailId } });
   }
 }
