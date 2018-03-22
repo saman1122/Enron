@@ -4,7 +4,7 @@ Requirement :
   - install node.js (V9.7.1)  
 
 Execution :  
-  - git clone https://...  
+  - git clone https://github.com/KevinJoaquim/Enron.git
   - cd frontend/  
   - npm install  
   - cd ..  
