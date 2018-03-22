@@ -232,7 +232,7 @@ var AppModule = /** @class */ (function () {
             ],
             imports: [
                 __WEBPACK_IMPORTED_MODULE_0__angular_platform_browser__["a" /* BrowserModule */],
-                __WEBPACK_IMPORTED_MODULE_4__angular_material__["b" /* MatDialogModule */],
+                __WEBPACK_IMPORTED_MODULE_4__angular_material__["a" /* MatDialogModule */],
                 __WEBPACK_IMPORTED_MODULE_0__angular_platform_browser__["a" /* BrowserModule */],
                 __WEBPACK_IMPORTED_MODULE_5__angular_platform_browser_animations__["a" /* BrowserAnimationsModule */],
                 __WEBPACK_IMPORTED_MODULE_2__angular_router__["c" /* RouterModule */].forRoot(__WEBPACK_IMPORTED_MODULE_3__app_routing_module__["a" /* routes */]),
@@ -308,6 +308,9 @@ var EmailService = /** @class */ (function () {
     EmailService.prototype.getEmailsPage = function (page, term) {
         return this.http.get(this.urlApi + '/search?term=' + term + '&page=' + page.pageNumber + '&size=' + page.pageSize);
     };
+    EmailService.prototype.getEmailById = function (idEmail) {
+        return this.http.get(this.urlApi + '/email/' + idEmail);
+    };
     EmailService = __decorate([
         Object(__WEBPACK_IMPORTED_MODULE_0__angular_core__["C" /* Injectable */])(),
         __metadata("design:paramtypes", [__WEBPACK_IMPORTED_MODULE_1__angular_common_http__["a" /* HttpClient */]])
@@ -329,7 +332,7 @@ module.exports = ""
 /***/ "./src/app/emaildetail/emaildetail.component.html":
 /***/ (function(module, exports) {
 
-module.exports = "<div class=\"reglist\">\r\n    <div class=\"container\">\r\n        <div class=\"row\">\r\n            <div class=\"col-6 col-sm-10\">\r\n                <h2>\r\n                 Message n° {{ email.messageId }} \r\n                </h2>\r\n            </div>\r\n            <div class=\"col-6 col-sm-2\">\r\n                <button type=\"button\" class=\"btn btn-danger\" >Fermer</button>\r\n            </div>\r\n        </div>\r\n\r\n    <div class=\"container\">\r\n        <h2>Message n° {{ email.messageId }} </h2>\r\n        <div class=\"card\">\r\n          <div class=\"card-header\">\r\n              <div class=\"row\">\r\n                  <div class=\"col-6 col-sm-12\">\r\n                    <p><b>Date : </b> {{ email.date }}</p>\r\n                    <p><b>From : </b> {{ email.from }}</p>\r\n                    <p><b>To : </b>{{ email.to }}</p>\r\n                    <p><b>Subject : </b>{{ email.subject }}</p>\r\n                  </div>\r\n                </div>\r\n          </div>\r\n          <div class=\"card-body\">{{ email.content }}</div> \r\n        </div>\r\n      </div>\r\n</div>"
+module.exports = "<div class=\"reglist\">\r\n    <div class=\"container\" *ngIf=\"dataLoaded\">\r\n        <h2>Message n° {{ email.messageId }} </h2>\r\n        <div class=\"card\">\r\n            <div class=\"card-header\">\r\n                <div class=\"row\">\r\n                    <div class=\"col-6 col-sm-12\">\r\n                        <p>\r\n                            <b>Date : </b> {{ email.date }}</p>\r\n                        <p>\r\n                            <b>From : </b> {{ email.from }}</p>\r\n                        <p>\r\n                            <b>To : </b>{{ email.to }}</p>\r\n                        <p>\r\n                            <b>Subject : </b>{{ email.subject }}</p>\r\n                    </div>\r\n                </div>\r\n            </div>\r\n            <div class=\"card-body\">{{ email.content }}</div>\r\n        </div>\r\n    </div>\r\n</div>"
 
 /***/ }),
 
@@ -340,6 +343,7 @@ module.exports = "<div class=\"reglist\">\r\n    <div class=\"container\">\r\n  
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return EmaildetailComponent; });
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__angular_core__ = __webpack_require__("./node_modules/@angular/core/esm5/core.js");
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__angular_router__ = __webpack_require__("./node_modules/@angular/router/esm5/router.js");
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__email_service__ = __webpack_require__("./src/app/email.service.ts");
 var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
     var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
     if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
@@ -351,24 +355,33 @@ var __metadata = (this && this.__metadata) || function (k, v) {
 };
 
 
+
 var EmaildetailComponent = /** @class */ (function () {
-    function EmaildetailComponent(router, route) {
+    function EmaildetailComponent(router, route, service) {
         this.router = router;
         this.route = route;
+        this.service = service;
+        this.dataLoaded = false;
     }
     EmaildetailComponent.prototype.ngOnInit = function () {
+        var _this = this;
         this.route.queryParams.subscribe(function (params) {
             console.log(params);
-            //this.email.messageId = params['id'];
+            _this.service.getEmailById(params['id'])
+                .subscribe(function (data) {
+                _this.email = data;
+                _this.dataLoaded = true;
+            });
         });
     };
     EmaildetailComponent = __decorate([
         Object(__WEBPACK_IMPORTED_MODULE_0__angular_core__["n" /* Component */])({
             selector: 'app-emaildetail',
+            providers: [__WEBPACK_IMPORTED_MODULE_2__email_service__["a" /* EmailService */]],
             template: __webpack_require__("./src/app/emaildetail/emaildetail.component.html"),
             styles: [__webpack_require__("./src/app/emaildetail/emaildetail.component.css")]
         }),
-        __metadata("design:paramtypes", [__WEBPACK_IMPORTED_MODULE_1__angular_router__["b" /* Router */], __WEBPACK_IMPORTED_MODULE_1__angular_router__["a" /* ActivatedRoute */]])
+        __metadata("design:paramtypes", [__WEBPACK_IMPORTED_MODULE_1__angular_router__["b" /* Router */], __WEBPACK_IMPORTED_MODULE_1__angular_router__["a" /* ActivatedRoute */], __WEBPACK_IMPORTED_MODULE_2__email_service__["a" /* EmailService */]])
     ], EmaildetailComponent);
     return EmaildetailComponent;
 }());
@@ -487,7 +500,7 @@ module.exports = ""
 /***/ "./src/app/table/table.component.html":
 /***/ (function(module, exports) {
 
-module.exports = "\r\n<div class=\"row\">\r\n    <div class=\"col-12 col-md-9\"></div>\r\n    <div class=\"col-6 col-md-3\">\r\n        <input #searchBox class=\"form-control mr-sm-2\" type=\"text\" placeholder=\"Search\" aria-label=\"Search\">\r\n        <button class=\"btn btn-outline-success my-2 my-sm-0\" (click)='searchClick(searchBox.value)'>Search</button>\r\n    <br>\r\n  </div>\r\n  </div>\r\n  \r\n  <div class=\"reglist\">\r\n  <table class=\"table table-striped\">\r\n    <thead>\r\n      <tr>\r\n        <th>#</th>\r\n        <th>Date</th>\r\n        <th>From</th>\r\n        <th>To</th>\r\n        <th>Subject</th>\r\n        <th>Occurrence Numbers</th>\r\n      </tr>\r\n    </thead>\r\n    <tbody>\r\n      <tr *ngFor=\"let search of searchresults; let i = index\">\r\n        <th scope=\"row\">{{ i + 1 }}</th>\r\n        <td>{{ search.email.date }}</td>\r\n        <td>{{ search.email.from }}</td>\r\n        <td>{{ search.email.to }}</td>\r\n        <td>{{ search.email.subject }}</td>\r\n        <td>{{ search.occurencesNumber }}</td>\r\n        <td><button type=\"button\" class=\"btn btn-primary\" (click)=\"afficher(email)\">Afficher</button></td>\r\n      </tr>\r\n    </tbody>\r\n  </table>\r\n</div>\r\n\r\n\r\n<nav aria-label=\"Page navigation example\">\r\n    <ul class=\"pagination justify-content-end\">\r\n      <li class=\"page-item disabled\">\r\n        <a class=\"page-link\" href=\"#\" tabindex=\"-1\">Previous</a>\r\n      </li>\r\n      <li class=\"page-item\"><a class=\"page-link\" (click)=\"gopage(1)\">1</a></li>\r\n      <li class=\"page-item\"><a class=\"page-link\" (click)=\"gopage(2)\">2</a></li>\r\n      <li class=\"page-item\"><a class=\"page-link\" (click)=\"gopage(3)\">3</a></li>\r\n      <li class=\"page-item\">\r\n        <a class=\"page-link\" href=\"#\">Next</a>\r\n      </li>\r\n    </ul>\r\n  </nav>\r\n"
+module.exports = "<div class=\"row\">\r\n  <div class=\"col-12 col-md-9\"></div>\r\n  <div class=\"col-6 col-md-3\">\r\n    <input #searchBox class=\"form-control mr-sm-2\" type=\"text\" placeholder=\"Search\" aria-label=\"Search\">\r\n    <button class=\"btn btn-outline-success my-2 my-sm-0\" (click)='searchClick(searchBox.value)'>Search</button>\r\n    <br>\r\n  </div>\r\n</div>\r\n\r\n<div class=\"reglist\">\r\n  <table class=\"table table-striped\">\r\n    <thead>\r\n      <tr>\r\n        <th>#</th>\r\n        <th>Date</th>\r\n        <th>From</th>\r\n        <th>To</th>\r\n        <th>Subject</th>\r\n        <th>Score</th>\r\n        <th>Occurrence Numbers</th>\r\n      </tr>\r\n    </thead>\r\n    <tbody>\r\n      <tr *ngFor=\"let search of searchresults; let i = index\">\r\n        <th scope=\"row\">{{ i + 1 }}</th>\r\n        <td>{{ search.email.date }}</td>\r\n        <td>{{ search.email.from }}</td>\r\n        <td>{{ search.email.to }}</td>\r\n        <td>{{ search.email.subject }}</td>\r\n        <td>{{ search.score }}</td>\r\n        <td>{{ search.occurencesNumber }}</td>\r\n        <td>\r\n          <button type=\"button\" class=\"btn btn-primary\" (click)=\"afficher(search.email.messageId)\">Afficher</button>\r\n        </td>\r\n      </tr>\r\n    </tbody>\r\n  </table>\r\n</div>\r\n\r\n\r\n<nav aria-label=\"Page navigation example\">\r\n  <ul class=\"pagination justify-content-end\">\r\n    <li class=\"page-item disabled\">\r\n      <a class=\"page-link\" href=\"#\" tabindex=\"-1\">Previous</a>\r\n    </li>\r\n    <li class=\"page-item\">\r\n      <a class=\"page-link\" (click)=\"gopage(1)\">1</a>\r\n    </li>\r\n    <li class=\"page-item\">\r\n      <a class=\"page-link\" (click)=\"gopage(2)\">2</a>\r\n    </li>\r\n    <li class=\"page-item\">\r\n      <a class=\"page-link\" (click)=\"gopage(3)\">3</a>\r\n    </li>\r\n    <li class=\"page-item\">\r\n      <a class=\"page-link\" href=\"#\">Next</a>\r\n    </li>\r\n  </ul>\r\n</nav>"
 
 /***/ }),
 
@@ -497,11 +510,9 @@ module.exports = "\r\n<div class=\"row\">\r\n    <div class=\"col-12 col-md-9\">
 "use strict";
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return TableComponent; });
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__angular_core__ = __webpack_require__("./node_modules/@angular/core/esm5/core.js");
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__angular_material__ = __webpack_require__("./node_modules/@angular/material/esm5/material.es5.js");
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__emaildetail_emaildetail_component__ = __webpack_require__("./src/app/emaildetail/emaildetail.component.ts");
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__email_service__ = __webpack_require__("./src/app/email.service.ts");
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__angular_router__ = __webpack_require__("./node_modules/@angular/router/esm5/router.js");
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_5__app_pageable_class__ = __webpack_require__("./src/app/app.pageable.class.ts");
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__email_service__ = __webpack_require__("./src/app/email.service.ts");
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__angular_router__ = __webpack_require__("./node_modules/@angular/router/esm5/router.js");
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__app_pageable_class__ = __webpack_require__("./src/app/app.pageable.class.ts");
 var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
     var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
     if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
@@ -515,13 +526,10 @@ var __metadata = (this && this.__metadata) || function (k, v) {
 
 
 
-
-
 var TableComponent = /** @class */ (function () {
-    function TableComponent(dialog, service, router) {
-        this.dialog = dialog;
+    function TableComponent(service, route) {
         this.service = service;
-        this.router = router;
+        this.route = route;
         this.searchresults = [];
         this.totalPages = 0;
         this.totalElements = 0;
@@ -529,16 +537,14 @@ var TableComponent = /** @class */ (function () {
         this.search = '';
     }
     TableComponent.prototype.ngOnInit = function () {
-        this.pages = new __WEBPACK_IMPORTED_MODULE_5__app_pageable_class__["a" /* Pageable */](0, 0, 20);
+        this.pages = new __WEBPACK_IMPORTED_MODULE_3__app_pageable_class__["a" /* Pageable */](0, 0, 20);
     };
     TableComponent.prototype.searchClick = function (value) {
         this.search = value;
         this.refresh();
     };
-    TableComponent.prototype.afficher = function (email) {
-        var dialogRef = this.dialog.open(__WEBPACK_IMPORTED_MODULE_2__emaildetail_emaildetail_component__["a" /* EmaildetailComponent */], {
-            data: { email: email }
-        });
+    TableComponent.prototype.afficher = function (emailId) {
+        this.route.navigate(['/emaildetail'], { queryParams: { id: emailId } });
     };
     TableComponent.prototype.gopage = function (page) {
         this.pages.pageNumber = page - 1;
@@ -559,11 +565,11 @@ var TableComponent = /** @class */ (function () {
     TableComponent = __decorate([
         Object(__WEBPACK_IMPORTED_MODULE_0__angular_core__["n" /* Component */])({
             selector: 'app-table',
-            providers: [__WEBPACK_IMPORTED_MODULE_3__email_service__["a" /* EmailService */]],
+            providers: [__WEBPACK_IMPORTED_MODULE_1__email_service__["a" /* EmailService */]],
             template: __webpack_require__("./src/app/table/table.component.html"),
             styles: [__webpack_require__("./src/app/table/table.component.css")]
         }),
-        __metadata("design:paramtypes", [__WEBPACK_IMPORTED_MODULE_1__angular_material__["a" /* MatDialog */], __WEBPACK_IMPORTED_MODULE_3__email_service__["a" /* EmailService */], __WEBPACK_IMPORTED_MODULE_4__angular_router__["b" /* Router */]])
+        __metadata("design:paramtypes", [__WEBPACK_IMPORTED_MODULE_1__email_service__["a" /* EmailService */], __WEBPACK_IMPORTED_MODULE_2__angular_router__["b" /* Router */]])
     ], TableComponent);
     return TableComponent;
 }());

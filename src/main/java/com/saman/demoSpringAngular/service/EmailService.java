@@ -14,10 +14,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.util.StringUtils;
 
 import java.io.IOException;
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 @Service
 public class EmailService {
@@ -79,6 +76,6 @@ public class EmailService {
     }
 
     public Email getOneById(String id) {
-        return emailRepository.findByMessageId(id);
+        return emailRepository.findById(id).orElse(null);
     }
 }

@@ -1,14 +1,13 @@
-
 <div class="row">
-    <div class="col-12 col-md-9"></div>
-    <div class="col-6 col-md-3">
-        <input #searchBox class="form-control mr-sm-2" type="text" placeholder="Search" aria-label="Search">
-        <button class="btn btn-outline-success my-2 my-sm-0" (click)='searchClick(searchBox.value)'>Search</button>
+  <div class="col-12 col-md-9"></div>
+  <div class="col-6 col-md-3">
+    <input #searchBox class="form-control mr-sm-2" type="text" placeholder="Search" aria-label="Search">
+    <button class="btn btn-outline-success my-2 my-sm-0" (click)='searchClick(searchBox.value)'>Search</button>
     <br>
   </div>
-  </div>
-  
-  <div class="reglist">
+</div>
+
+<div class="reglist">
   <table class="table table-striped">
     <thead>
       <tr>
@@ -17,6 +16,7 @@
         <th>From</th>
         <th>To</th>
         <th>Subject</th>
+        <th>Score</th>
         <th>Occurrence Numbers</th>
       </tr>
     </thead>
@@ -27,8 +27,11 @@
         <td>{{ search.email.from }}</td>
         <td>{{ search.email.to }}</td>
         <td>{{ search.email.subject }}</td>
+        <td>{{ search.score }}</td>
         <td>{{ search.occurencesNumber }}</td>
-        <td><button type="button" class="btn btn-primary" (click)="afficher(email)">Afficher</button></td>
+        <td>
+          <button type="button" class="btn btn-primary" (click)="afficher(search.email.messageId)">Afficher</button>
+        </td>
       </tr>
     </tbody>
   </table>
@@ -36,15 +39,21 @@
 
 
 <nav aria-label="Page navigation example">
-    <ul class="pagination justify-content-end">
-      <li class="page-item disabled">
-        <a class="page-link" href="#" tabindex="-1">Previous</a>
-      </li>
-      <li class="page-item"><a class="page-link" (click)="gopage(1)">1</a></li>
-      <li class="page-item"><a class="page-link" (click)="gopage(2)">2</a></li>
-      <li class="page-item"><a class="page-link" (click)="gopage(3)">3</a></li>
-      <li class="page-item">
-        <a class="page-link" href="#">Next</a>
-      </li>
-    </ul>
-  </nav>
+  <ul class="pagination justify-content-end">
+    <li class="page-item disabled">
+      <a class="page-link" href="#" tabindex="-1">Previous</a>
+    </li>
+    <li class="page-item">
+      <a class="page-link" (click)="gopage(1)">1</a>
+    </li>
+    <li class="page-item">
+      <a class="page-link" (click)="gopage(2)">2</a>
+    </li>
+    <li class="page-item">
+      <a class="page-link" (click)="gopage(3)">3</a>
+    </li>
+    <li class="page-item">
+      <a class="page-link" href="#">Next</a>
+    </li>
+  </ul>
+</nav>

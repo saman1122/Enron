@@ -8,7 +8,6 @@ import org.springframework.data.elasticsearch.repository.ElasticsearchCrudReposi
 import java.util.List;
 
 public interface EmailRepository extends ElasticsearchCrudRepository<Email,String> {
-    Email findByMessageId(String messageId);
     List<Email> findByFrom(String from);
     List<Email> findByTo(String to);
     Page<Email> findByContentContainingIgnoreCase(String term, Pageable pageable);

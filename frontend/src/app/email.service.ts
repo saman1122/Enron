@@ -27,4 +27,8 @@ export class EmailService {
     return this.http.get(this.urlApi + '/search?term='+term+'&page='+page.pageNumber+'&size='+page.pageSize);
   }
 
+  getEmailById(idEmail): Observable<any> {
+    return this.http.get(this.urlApi + '/email/' + idEmail);
+  }
+
 }
