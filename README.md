@@ -5,9 +5,59 @@ Requirement :
 
 Execution :  
   - git clone https://github.com/KevinJoaquim/Enron.git
-  - cd frontend/  
-  - npm install  
-  - cd ..  
+  - cd Enron/  
   - mvn install  
   - cd target/  
   - demoSpringAngular-0.0.1-SNAPSHOT.jar
+  
+Note:  
+For the first execution you need to uncomment the body of run method in main (Enron/src/main/java/com/saman/demoSpringAngular/DemoSpringAngularApplication.java) to put all emails in the database.  
+  
+```java
+public class DemoSpringAngularApplication implements CommandLineRunner {
+
+    .
+    .
+    .
+
+    @Override
+    public void run(String... args) throws Exception {
+
+        ///*
+        emailRepository.deleteAll();
+
+        Dataset enronDataset = new Dataset(DBLP.class.getClassLoader().getResource("enron").getFile());
+        .
+        .
+        .
+        }
+        emailRepository.saveAll(allEmails);
+        //*/
+    }
+}
+```
+After your first run you can re-comment to improve start of application and not repeat unnecessary commands.  
+  
+```java
+public class DemoSpringAngularApplication implements CommandLineRunner {
+
+    .
+    .
+    .
+
+    @Override
+    public void run(String... args) throws Exception {
+
+        /*
+        emailRepository.deleteAll();
+
+        Dataset enronDataset = new Dataset(DBLP.class.getClassLoader().getResource("enron").getFile());
+        .
+        .
+        .
+        }
+        emailRepository.saveAll(allEmails);
+        */
+    }
+}
+```
