@@ -10,12 +10,12 @@ import { PaginerService } from '../paginer.service';
 import { NgModel } from '@angular/forms';
 
 @Component({
-  selector: 'app-table',
+  selector: 'app-search',
   providers: [EmailService, PaginerService],
-  templateUrl: './table.component.html',
-  styleUrls: ['./table.component.css']
+  templateUrl: './search.component.html',
+  styleUrls: ['./search.component.css']
 })
-export class TableComponent implements OnInit {
+export class SearchComponent implements OnInit {
   public searchresults: Searchresult[] = [];
   public pages: Pageable;
   public totalPages: number = 0;

@@ -107,7 +107,7 @@ var AllComponent = /** @class */ (function () {
 "use strict";
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return routes; });
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__home_home_component__ = __webpack_require__("./src/app/home/home.component.ts");
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__table_table_component__ = __webpack_require__("./src/app/table/table.component.ts");
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__search_search_component__ = __webpack_require__("./src/app/search/search.component.ts");
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__all_all_component__ = __webpack_require__("./src/app/all/all.component.ts");
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__emaildetail_emaildetail_component__ = __webpack_require__("./src/app/emaildetail/emaildetail.component.ts");
 
@@ -120,8 +120,8 @@ var routes = [
         component: __WEBPACK_IMPORTED_MODULE_0__home_home_component__["a" /* HomeComponent */]
     },
     {
-        path: 'table',
-        component: __WEBPACK_IMPORTED_MODULE_1__table_table_component__["a" /* TableComponent */]
+        path: 'search',
+        component: __WEBPACK_IMPORTED_MODULE_1__search_search_component__["a" /* SearchComponent */]
     },
     {
         path: 'emaildetail/:id',
@@ -196,7 +196,7 @@ var AppComponent = /** @class */ (function () {
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_7__app_component__ = __webpack_require__("./src/app/app.component.ts");
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_8__navbar_navbar_component__ = __webpack_require__("./src/app/navbar/navbar.component.ts");
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_9__home_home_component__ = __webpack_require__("./src/app/home/home.component.ts");
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_10__table_table_component__ = __webpack_require__("./src/app/table/table.component.ts");
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_10__search_search_component__ = __webpack_require__("./src/app/search/search.component.ts");
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_11__emaildetail_emaildetail_component__ = __webpack_require__("./src/app/emaildetail/emaildetail.component.ts");
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_12__all_all_component__ = __webpack_require__("./src/app/all/all.component.ts");
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_13__angular_forms__ = __webpack_require__("./node_modules/@angular/forms/esm5/forms.js");
@@ -231,7 +231,7 @@ var AppModule = /** @class */ (function () {
                 __WEBPACK_IMPORTED_MODULE_7__app_component__["a" /* AppComponent */],
                 __WEBPACK_IMPORTED_MODULE_8__navbar_navbar_component__["a" /* NavbarComponent */],
                 __WEBPACK_IMPORTED_MODULE_9__home_home_component__["a" /* HomeComponent */],
-                __WEBPACK_IMPORTED_MODULE_10__table_table_component__["a" /* TableComponent */],
+                __WEBPACK_IMPORTED_MODULE_10__search_search_component__["a" /* SearchComponent */],
                 __WEBPACK_IMPORTED_MODULE_11__emaildetail_emaildetail_component__["a" /* EmaildetailComponent */],
                 __WEBPACK_IMPORTED_MODULE_12__all_all_component__["a" /* AllComponent */],
                 __WEBPACK_IMPORTED_MODULE_14__highlight_pipe__["a" /* HighlightPipe */]
@@ -427,8 +427,6 @@ var HighlightPipe = /** @class */ (function () {
         this.sanitizer = sanitizer;
     }
     HighlightPipe.prototype.transform = function (text, search) {
-        console.log("text: " + text);
-        console.log("term to search: " + search);
         if (search && text) {
             var pattern = search.toString().replace(/[\-\[\]\/\{\}\(\)\*\+\?\.\\\^\$\|]/g, '\\$&');
             pattern = pattern.split(' ').filter(function (t) {
@@ -514,7 +512,7 @@ module.exports = ""
 /***/ "./src/app/navbar/navbar.component.html":
 /***/ (function(module, exports) {
 
-module.exports = "<nav class=\"navbar navbar-expand-md navbar-dark bg-dark fixed-top\">\r\n  <div class=\"collapse navbar-collapse\" id=\"navbarsExampleDefault\">\r\n    <ul class=\"navbar-nav mr-auto\">\r\n      <li class=\"nav-item\">\r\n        <a class=\"nav-link\" routerLink=\"\">Home\r\n          <span class=\"sr-only\">(current)</span>\r\n        </a>\r\n      </li>\r\n      <li>\r\n        <a class=\"nav-link\" routerLink=\"all\">All</a>\r\n      </li>\r\n    </ul>\r\n    <div class=\"row\">\r\n      <div class=\"input-group\">\r\n        <input type=\"text\" placeholder=\"Search\" class=\"form-control mr-sm-2\" [(ngModel)]=\"search\" #ctrl=\"ngModel\" required>\r\n        <span class=\"input-group-btn\">\r\n          <button *ngIf=\"ctrl.valid\" class=\"btn btn-outline-success my-2 my-sm-0\" type=\"button\" [routerLink]=\"['/table']\" [queryParams]=\"{ term: ctrl.value }\" queryParamsHandling=\"merge\">Search</button>\r\n        </span>\r\n      </div>\r\n    </div>\r\n  </div>\r\n</nav>"
+module.exports = "<nav class=\"navbar navbar-expand-md navbar-dark bg-dark fixed-top\">\r\n  <div class=\"collapse navbar-collapse\" id=\"navbarsExampleDefault\">\r\n    <ul class=\"navbar-nav mr-auto\">\r\n      <li class=\"nav-item\">\r\n        <a class=\"nav-link\" routerLink=\"\">Home\r\n          <span class=\"sr-only\">(current)</span>\r\n        </a>\r\n      </li>\r\n      <li>\r\n        <a class=\"nav-link\" routerLink=\"all\">All</a>\r\n      </li>\r\n    </ul>\r\n    <div class=\"row\">\r\n      <div class=\"input-group\">\r\n        <input type=\"text\" placeholder=\"Search\" class=\"form-control mr-sm-2\" [(ngModel)]=\"search\" #ctrl=\"ngModel\" required>\r\n        <span class=\"input-group-btn\">\r\n          <button *ngIf=\"ctrl.valid\" class=\"btn btn-outline-success my-2 my-sm-0\" type=\"button\" [routerLink]=\"['/search']\" [queryParams]=\"{ term: ctrl.value }\" queryParamsHandling=\"merge\">Search</button>\r\n        </span>\r\n      </div>\r\n    </div>\r\n  </div>\r\n</nav>"
 
 /***/ }),
 
@@ -616,25 +614,25 @@ var PaginerService = /** @class */ (function () {
 
 /***/ }),
 
-/***/ "./src/app/table/table.component.css":
+/***/ "./src/app/search/search.component.css":
 /***/ (function(module, exports) {
 
 module.exports = "  .table {\r\n    table-layout: fixed;\r\n  }\r\n\r\n  .table td, .table th {\r\n    overflow: hidden;\r\n  }\r\n  "
 
 /***/ }),
 
-/***/ "./src/app/table/table.component.html":
+/***/ "./src/app/search/search.component.html":
 /***/ (function(module, exports) {
 
 module.exports = "<div class=\"table-responsive\">\r\n  <table class=\"table table-striped\">\r\n    <thead>\r\n      <tr>\r\n        <th width=\"3%\">#</th>\r\n        <th width=\"12%\">Date</th>\r\n        <th width=\"20%\">From</th>\r\n        <th width=\"23%\">To</th>\r\n        <th width=\"25%\">Subject</th>\r\n        <th width=\"5%\">Score</th>\r\n        <th width=\"5%\">Occurs</th>\r\n        <th width=\"7%\">Actions</th>\r\n      </tr>\r\n    </thead>\r\n    <tbody>\r\n      <tr *ngFor=\"let search of searchresults; let i = index\">\r\n        <th scope=\"row\">{{ i + 1 }}</th>\r\n        <td>{{ search.email.date }}</td>\r\n        <td>{{ search.email.from }}</td>\r\n        <td>{{ search.email.to }}</td>\r\n        <td>{{ search.email.subject }}</td>\r\n        <td>{{ search.score }}</td>\r\n        <td>{{ search.occurencesNumber }}</td>\r\n        <td>\r\n          <button type=\"button\" class=\"btn btn-primary\" [routerLink]=\"['/emaildetail', search.email.messageId]\" [queryParams]=\"{ term: searchTerm }\">Afficher</button>\r\n        </td>\r\n      </tr>\r\n    </tbody>\r\n  </table>\r\n</div>\r\n\r\n<div>\r\n  <span>Total elements: {{totalElements}}</span>\r\n  <span>Total pages: {{totalPages}}</span>\r\n  <span>Size: {{size}}</span>\r\n</div>\r\n\r\n<!-- pager -->\r\n<nav>\r\n  <ul class=\"pagination justify-content-end\" *ngIf=\"pagesToShow && pagesToShow.length\">\r\n    <li class=\"page-item\" [ngClass]=\"{disabled:pages.pageNumber === 0}\">\r\n      <a class=\"page-link\" (click)=\"gopage(1)\">First</a>\r\n    </li>\r\n    <li class=\"page-item\" [ngClass]=\"{disabled:pages.pageNumber === 0}\">\r\n      <a class=\"page-link\" (click)=\"gopage(pages.pageNumber)\">Previous</a>\r\n    </li>\r\n    <li class=\"page-item\" *ngFor=\"let page of pagesToShow\" [ngClass]=\"{active:pages.pageNumber + 1 === page}\">\r\n      <a class=\"page-link\" (click)=\"gopage(page)\">{{page}}</a>\r\n    </li>\r\n    <li class=\"page-item\" [ngClass]=\"{disabled:pages.pageNumber + 1 === totalPages}\">\r\n      <a class=\"page-link\" (click)=\"gopage(pages.pageNumber + 2)\">Next</a>\r\n    </li>\r\n    <li class=\"page-item\" [ngClass]=\"{disabled:pages.pageNumber + 1 === totalPages}\">\r\n      <a class=\"page-link\" (click)=\"gopage(totalPages)\">Last</a>\r\n    </li>\r\n  </ul>\r\n</nav>"
 
 /***/ }),
 
-/***/ "./src/app/table/table.component.ts":
+/***/ "./src/app/search/search.component.ts":
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return TableComponent; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return SearchComponent; });
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__angular_core__ = __webpack_require__("./node_modules/@angular/core/esm5/core.js");
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__email_service__ = __webpack_require__("./src/app/email.service.ts");
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__angular_router__ = __webpack_require__("./node_modules/@angular/router/esm5/router.js");
@@ -654,8 +652,8 @@ var __metadata = (this && this.__metadata) || function (k, v) {
 
 
 
-var TableComponent = /** @class */ (function () {
-    function TableComponent(service, route, servicePage) {
+var SearchComponent = /** @class */ (function () {
+    function SearchComponent(service, route, servicePage) {
         this.service = service;
         this.route = route;
         this.servicePage = servicePage;
@@ -667,7 +665,7 @@ var TableComponent = /** @class */ (function () {
         this.possibleSize = [10, 20, 50, 100, 200];
         this.pages = new __WEBPACK_IMPORTED_MODULE_3__app_pageable_class__["a" /* Pageable */]();
     }
-    TableComponent.prototype.ngOnInit = function () {
+    SearchComponent.prototype.ngOnInit = function () {
         var _this = this;
         this.route.queryParams
             .subscribe(function (params) {
@@ -676,7 +674,7 @@ var TableComponent = /** @class */ (function () {
             _this.refresh();
         });
     };
-    TableComponent.prototype.gopage = function (page) {
+    SearchComponent.prototype.gopage = function (page) {
         if (page < 1 || page > this.totalPages) {
             return;
         }
@@ -684,7 +682,7 @@ var TableComponent = /** @class */ (function () {
         this.pages.offset = this.pages.pageNumber * this.pages.pageSize;
         this.refresh();
     };
-    TableComponent.prototype.refresh = function () {
+    SearchComponent.prototype.refresh = function () {
         var _this = this;
         this.service.getEmailsPage(this.pages, this.searchTerm)
             .subscribe(function (data) {
@@ -696,16 +694,16 @@ var TableComponent = /** @class */ (function () {
             _this.pagesToShow = _this.servicePage.getPager(_this.totalElements, _this.totalPages, (_this.pages.pageNumber + 1), _this.pages.pageSize);
         });
     };
-    TableComponent = __decorate([
+    SearchComponent = __decorate([
         Object(__WEBPACK_IMPORTED_MODULE_0__angular_core__["n" /* Component */])({
-            selector: 'app-table',
+            selector: 'app-search',
             providers: [__WEBPACK_IMPORTED_MODULE_1__email_service__["a" /* EmailService */], __WEBPACK_IMPORTED_MODULE_4__paginer_service__["a" /* PaginerService */]],
-            template: __webpack_require__("./src/app/table/table.component.html"),
-            styles: [__webpack_require__("./src/app/table/table.component.css")]
+            template: __webpack_require__("./src/app/search/search.component.html"),
+            styles: [__webpack_require__("./src/app/search/search.component.css")]
         }),
         __metadata("design:paramtypes", [__WEBPACK_IMPORTED_MODULE_1__email_service__["a" /* EmailService */], __WEBPACK_IMPORTED_MODULE_2__angular_router__["a" /* ActivatedRoute */], __WEBPACK_IMPORTED_MODULE_4__paginer_service__["a" /* PaginerService */]])
-    ], TableComponent);
-    return TableComponent;
+    ], SearchComponent);
+    return SearchComponent;
 }());
 
 

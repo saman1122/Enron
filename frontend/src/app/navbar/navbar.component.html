@@ -14,7 +14,7 @@
       <div class="input-group">
         <input type="text" placeholder="Search" class="form-control mr-sm-2" [(ngModel)]="search" #ctrl="ngModel" required>
         <span class="input-group-btn">
-          <button *ngIf="ctrl.valid" class="btn btn-outline-success my-2 my-sm-0" type="button" [routerLink]="['/table']" [queryParams]="{ term: ctrl.value }" queryParamsHandling="merge">Search</button>
+          <button *ngIf="ctrl.valid" class="btn btn-outline-success my-2 my-sm-0" type="button" [routerLink]="['/search']" [queryParams]="{ term: ctrl.value }" queryParamsHandling="merge">Search</button>
         </span>
       </div>
     </div>
