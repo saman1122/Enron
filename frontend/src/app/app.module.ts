@@ -13,6 +13,7 @@ import { TableComponent } from './table/table.component';
 import { EmaildetailComponent } from './emaildetail/emaildetail.component';
 import { AllComponent } from './all/all.component';
 import { FormsModule } from '@angular/forms';
+import { HighlightPipe } from './highlight.pipe';
 
 
 @NgModule({
@@ -22,7 +23,8 @@ import { FormsModule } from '@angular/forms';
     HomeComponent,
     TableComponent,
     EmaildetailComponent,
-    AllComponent
+    AllComponent,
+    HighlightPipe
   ],
   imports: [
     BrowserModule,

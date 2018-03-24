@@ -1,7 +1,6 @@
 export class Email {
     constructor(
       public messageId : String ='',
-      public raw : String ='',
       public mailbox : String ='',
       public user : String ='',
       public from : String ='',

@@ -1,12 +1,13 @@
-<div class="reglist">
+<div class="table-responsive">
   <table class="table table-striped">
     <thead>
       <tr>
-        <th>#</th>
-        <th>Date</th>
-        <th>From</th>
-        <th>To</th>
-        <th>Subject</th>
+        <th width="4%">#</th>
+        <th width="15%">Date</th>
+        <th width="22%">From</th>
+        <th width="25%">To</th>
+        <th width="27%">Subject</th>
+        <th width="8%">Actions</th>
       </tr>
     </thead>
     <tbody>
@@ -17,7 +18,7 @@
         <td>{{ email.to }}</td>
         <td>{{ email.subject }}</td>
         <td>
-          <button type="button" class="btn btn-primary" routerLink="/emaildetail/{{email.messageId}}">Afficher</button>
+          <button type="button" class="btn btn-primary" [routerLink]="['/emaildetail', email.messageId]">Afficher</button>
         </td>
       </tr>
     </tbody>

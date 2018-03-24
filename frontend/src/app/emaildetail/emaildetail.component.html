@@ -1,22 +1,22 @@
 <div class="reglist">
     <div class="container" *ngIf="dataLoaded">
-        <h2>Message n° {{ email.messageId }} </h2>
+        <h2>Message n° <div [innerHTML]="email.messageId | highlight : term"></div> </h2>
         <div class="card">
             <div class="card-header">
                 <div class="row">
                     <div class="col-6 col-sm-12">
-                        <p>
-                            <b>Date : </b> {{ email.date }}</p>
-                        <p>
-                            <b>From : </b> {{ email.from }}</p>
-                        <p>
-                            <b>To : </b>{{ email.to }}</p>
-                        <p>
-                            <b>Subject : </b>{{ email.subject }}</p>
+                        <b>Mailbox : </b> <div [innerHTML]="email.mailbox | highlight : term"></div>
+                        <b>User : </b> <div [innerHTML]="email.user | highlight : term"></div>
+                        <b>Date : </b> <div [innerHTML]="email.date | highlight : term"></div>
+                        <b>From : </b> <div [innerHTML]="email.from | highlight : term"></div>
+                        <b>To : </b> <div [innerHTML]="email.to | highlight : term"></div>
+                        <b>Cc : </b> <div [innerHTML]="email.cc | highlight : term"></div>
+                        <b>Bcc : </b> <div [innerHTML]="email.bcc | highlight : term"></div>
+                        <b>Subject : </b> <div [innerHTML]="email.subject | highlight : term"></div>
                     </div>
                 </div>
             </div>
-            <div class="card-body">{{ email.content }}</div>
+            <div class="card-body"><div [innerHTML]="email.content | highlight : term"></div></div>
         </div>
     </div>
 </div>

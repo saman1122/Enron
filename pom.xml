@@ -31,11 +31,6 @@
 			<artifactId>spring-boot-starter-web</artifactId>
 		</dependency>
 
-		<dependency>
-			<groupId>org.springframework.session</groupId>
-			<artifactId>spring-session-core</artifactId>
-		</dependency>
-
         <dependency>
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-data-elasticsearch</artifactId>
@@ -44,7 +39,7 @@
         <dependency>
             <groupId>info.debatty</groupId>
             <artifactId>java-datasets</artifactId>
-			<version>RELEASE</version>
+            <version>RELEASE</version>
         </dependency>
 
 		<dependency>

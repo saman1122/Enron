@@ -12,6 +12,7 @@ import { EmailService } from '../email.service';
 export class EmaildetailComponent implements OnInit {
   public email: Email;
   public dataLoaded: boolean;
+  public term: string = '';
 
   constructor(private route: ActivatedRoute, private service: EmailService) {
     this.dataLoaded = false;
@@ -19,7 +20,10 @@ export class EmaildetailComponent implements OnInit {
 
   ngOnInit() {
     const id = this.route.snapshot.params.id;
-    
+    this.route.queryParams.subscribe(params => {
+      this.term = params['term'] || '';
+    });
+
     this.service.getEmailById(id)
       .subscribe(data => {
         this.email = data;

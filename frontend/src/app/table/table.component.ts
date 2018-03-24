@@ -22,8 +22,8 @@ export class TableComponent implements OnInit {
   public totalElements: number = 0;
   public size: number = 0;
   public pagesToShow: Range;
-  public search: String = '';
-  public possibleSize: number[] = [ 10, 20, 50, 100, 200];
+  public searchTerm: string = '';
+  public possibleSize: number[] = [10, 20, 50, 100, 200];
 
   constructor(private service: EmailService, private route: ActivatedRoute, private servicePage: PaginerService) {
     this.pages = new Pageable();
@@ -32,7 +32,8 @@ export class TableComponent implements OnInit {
   ngOnInit() {
     this.route.queryParams
       .subscribe(params => {
-        this.search = params.term; this.pages.init();
+        this.searchTerm = params.term;
+        this.pages.init;
         this.refresh();
       });
   }
@@ -48,7 +49,7 @@ export class TableComponent implements OnInit {
   }
 
   refresh() {
-    this.service.getEmailsPage(this.pages, this.search)
+    this.service.getEmailsPage(this.pages, this.searchTerm)
       .subscribe(data => {
         this.searchresults = data.content;
         this.pages = data.pageable;

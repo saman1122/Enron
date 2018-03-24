@@ -1,14 +1,15 @@
-<div class="reglist">
+<div class="table-responsive">
   <table class="table table-striped">
     <thead>
       <tr>
-        <th>#</th>
-        <th>Date</th>
-        <th>From</th>
-        <th>To</th>
-        <th>Subject</th>
-        <th>Score</th>
-        <th>Occurrence Numbers</th>
+        <th width="3%">#</th>
+        <th width="12%">Date</th>
+        <th width="20%">From</th>
+        <th width="23%">To</th>
+        <th width="25%">Subject</th>
+        <th width="5%">Score</th>
+        <th width="5%">Occurs</th>
+        <th width="7%">Actions</th>
       </tr>
     </thead>
     <tbody>
@@ -21,7 +22,7 @@
         <td>{{ search.score }}</td>
         <td>{{ search.occurencesNumber }}</td>
         <td>
-          <button type="button" class="btn btn-primary" routerLink="/emaildetail/{{search.email.messageId}}">Afficher</button>
+          <button type="button" class="btn btn-primary" [routerLink]="['/emaildetail', search.email.messageId]" [queryParams]="{ term: searchTerm }">Afficher</button>
         </td>
       </tr>
     </tbody>
