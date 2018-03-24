@@ -30,7 +30,6 @@ public class DemoSpringAngularApplication implements CommandLineRunner {
         .
         .
         .
-        }
         emailRepository.saveAll(allEmails);
         //*/
     }
@@ -55,7 +54,6 @@ public class DemoSpringAngularApplication implements CommandLineRunner {
         .
         .
         .
-        }
         emailRepository.saveAll(allEmails);
         */
     }
