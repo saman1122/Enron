@@ -34,13 +34,11 @@ import java.util.Stack;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
-import static java.awt.SystemColor.info;
-
 /**
  *
  * @author Thibault Debatty
  */
-public class Dataset extends info.debatty.java.datasets.Dataset<EmailDataset> {
+public class Dataset extends DatasetAbstract<EmailDataset> {
 
     private final String directory;
 

@@ -462,7 +462,7 @@ module.exports = ""
 /***/ "./src/app/home/home.component.html":
 /***/ (function(module, exports) {
 
-module.exports = "<div class=”container”>\r\n  <div>\r\n    <h1>School project</h1>\r\n    <br>\r\n    <div>\r\n      <div>Technologies:</div>\r\n      <div>\r\n        <li>Spring boot</li>\r\n        <li>JPA</li>\r\n        <li>MongoDb</li>\r\n        <li>Angular 5</li>\r\n      </div>\r\n      <br>\r\n      <div>Realised by Kevin, Lila, Zineb and Saman</div>\r\n    </div>\r\n  </div>\r\n</div>"
+module.exports = "<div class=”container” align=\"center\">\r\n  <div>\r\n    <h1>Easy Search</h1>\r\n    <br>\r\n    <div>\r\n      <div>\r\n        <iframe src=\"//www.slideshare.net/slideshow/embed_code/key/zxyKjROBhAf3Pd\" width=\"595\" height=\"485\" frameborder=\"0\" marginwidth=\"0\"\r\n          marginheight=\"0\" scrolling=\"no\" style=\"border:1px solid #CCC; border-width:1px; margin-bottom:5px; max-width: 100%;\"\r\n          allowfullscreen>\r\n        </iframe>\r\n        <div style=\"margin-bottom:5px\">\r\n          <strong>\r\n            <a href=\"//www.slideshare.net/KevinJoaquim1/easy-search-92026452\" title=\"Easy search\" target=\"_blank\">Easy search</a>\r\n          </strong> \r\n          <strong>\r\n            <a href=\"https://www.slideshare.net/KevinJoaquim1\" target=\"_blank\">Realised by Kevin, Lila, Zineb and Saman</a>\r\n          </strong>\r\n        </div>\r\n      </div>\r\n    </div>\r\n  </div>\r\n</div>"
 
 /***/ }),
 

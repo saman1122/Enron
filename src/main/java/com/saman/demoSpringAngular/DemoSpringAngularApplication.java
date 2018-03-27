@@ -4,7 +4,6 @@ import com.saman.demoSpringAngular.enron.Dataset;
 import com.saman.demoSpringAngular.enron.EmailDataset;
 import com.saman.demoSpringAngular.entity.Email;
 import com.saman.demoSpringAngular.repository.EmailRepository;
-import info.debatty.java.datasets.examples.DBLP;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
@@ -29,7 +28,7 @@ public class DemoSpringAngularApplication implements CommandLineRunner {
         /*
         emailRepository.deleteAll();
 
-        Dataset enronDataset = new Dataset(DBLP.class.getClassLoader().getResource("enron").getFile());
+        Dataset enronDataset = new Dataset(DemoSpringAngularApplication.class.getClassLoader().getResource("enron").getFile());
 
         List<Email> allEmails = new ArrayList<>();
         int i = 0;

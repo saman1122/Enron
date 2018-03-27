@@ -37,9 +37,9 @@
         </dependency>
 
         <dependency>
-            <groupId>info.debatty</groupId>
-            <artifactId>java-datasets</artifactId>
-            <version>RELEASE</version>
+            <groupId>org.apache.commons</groupId>
+            <artifactId>commons-email</artifactId>
+            <version>1.4</version>
         </dependency>
 
 		<dependency>
