@@ -8,9 +8,13 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
+import org.springframework.core.io.Resource;
+import org.springframework.core.io.support.PathMatchingResourcePatternResolver;
 
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
 
 @SpringBootApplication
 public class DemoSpringAngularApplication implements CommandLineRunner {
@@ -23,16 +27,15 @@ public class DemoSpringAngularApplication implements CommandLineRunner {
     }
 
     @Override
-    public void run(String... args) throws Exception {
+    public void run(String... args) {
 
-        /*
         emailRepository.deleteAll();
 
-        Dataset enronDataset = new Dataset(DemoSpringAngularApplication.class.getClassLoader().getResource("enron").getFile());
+        Dataset enronDataset = new Dataset(this.getClass().getClassLoader().getResource("enron").getFile());
 
         List<Email> allEmails = new ArrayList<>();
         int i = 0;
-        for(EmailDataset email : enronDataset ){
+        for (EmailDataset email : enronDataset) {
             i++;
             allEmails.add(new Email(
                     email.getMessageID(),
@@ -47,12 +50,13 @@ public class DemoSpringAngularApplication implements CommandLineRunner {
                     email.getDate()
             ));
 
-            if (i%15000 == 0) {
+            if (i == 15000) {
                 emailRepository.saveAll(allEmails);
                 allEmails.clear();
+                i = 0;
             }
         }
-        emailRepository.saveAll(allEmails);
-        */
+        if (allEmails.size() > 0)
+            emailRepository.saveAll(allEmails);
     }
 }

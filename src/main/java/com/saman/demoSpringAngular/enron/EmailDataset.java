@@ -27,7 +27,6 @@ package com.saman.demoSpringAngular.enron;
 import org.apache.commons.mail.util.MimeMessageParser;
 
 import javax.mail.Address;
-import javax.mail.MessagingException;
 import javax.mail.Session;
 import javax.mail.internet.MimeMessage;
 import java.io.ByteArrayInputStream;
@@ -56,7 +55,7 @@ public class EmailDataset implements Serializable {
     private final String content;
     private final Date date;
 
-    String fileSeparator = Pattern.quote(System.getProperty("file.separator"));
+    private String fileSeparator = Pattern.quote(System.getProperty("file.separator"));
 
 
     EmailDataset(final String raw, final String mailbox) throws Exception {
@@ -75,11 +74,9 @@ public class EmailDataset implements Serializable {
         cc = addressToString(parser.getCc());
         bcc = addressToString(parser.getBcc());
         subject = parser.getSubject();
-        content = (message.getContent())!= null ? message.getContent().toString() : "null";
+        content = (message.getContent()) != null ? message.getContent().toString() : "null";
         message_id = parser.getMimeMessage().getMessageID();
         date = message.getSentDate();
-
-
     }
 
     public String getUser() {
@@ -136,11 +133,9 @@ public class EmailDataset implements Serializable {
     }
 
     @Override
-    public boolean  equals(Object other) {
-
+    public boolean equals(Object other) {
         EmailDataset other_email = (EmailDataset) other;
         return other_email.message_id.equals(this.message_id);
-
     }
 
     @Override

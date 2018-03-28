@@ -20,13 +20,13 @@ public class EmailRest {
         return service.getEmailFindByTerm(term, pageable);
     }
 
-    @RequestMapping(value="/all",method= RequestMethod.GET)
+    @RequestMapping(value = "/all", method = RequestMethod.GET)
     public Page<Email> getAllEmailsByPage(Pageable pageable) {
         return service.listAllByPage(pageable);
     }
 
-    @RequestMapping(value="/email/{messageId}",method= RequestMethod.GET)
-    public Email getOneEmailById(@PathVariable String messageId){
+    @RequestMapping(value = "/email/{messageId}", method = RequestMethod.GET)
+    public Email getOneEmailById(@PathVariable String messageId) {
         return service.getOneById(messageId);
     }
 }

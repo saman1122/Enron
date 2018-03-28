@@ -20,9 +20,11 @@ public class Email {
     public String content;
     public Date date;
 
-    public Email() {}
+    public Email() {
+        this.date = new Date();
+    }
 
-    public Email(String messageId, String mailbox, String user, String from, List<String> to, List<String> cc, List<String> bcc, String subject, String content , Date date) {
+    public Email(String messageId, String mailbox, String user, String from, List<String> to, List<String> cc, List<String> bcc, String subject, String content, Date date) {
         this.messageId = messageId;
         this.mailbox = mailbox;
         this.user = user;

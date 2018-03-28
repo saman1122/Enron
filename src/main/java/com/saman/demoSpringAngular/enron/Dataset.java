@@ -23,19 +23,18 @@
  */
 package com.saman.demoSpringAngular.enron;
 
-import javax.mail.MessagingException;
-import java.io.BufferedReader;
 import java.io.File;
-import java.io.FileReader;
 import java.io.IOException;
+import java.nio.file.Files;
+import java.nio.file.Path;
 import java.util.Iterator;
 import java.util.LinkedList;
 import java.util.Stack;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import java.util.stream.Stream;
 
 /**
- *
  * @author Thibault Debatty
  */
 public class Dataset extends DatasetAbstract<EmailDataset> {
@@ -73,7 +72,6 @@ public class Dataset extends DatasetAbstract<EmailDataset> {
         return (this.directory == null) ? (other.directory == null) : this.directory.equals(other.directory);
     }
 
-    
 
     private static class EnronIterator implements Iterator<EmailDataset> {
 
@@ -83,10 +81,10 @@ public class Dataset extends DatasetAbstract<EmailDataset> {
          * List of folders that can be processed to extract pages. Implemented
          * as a stack to get depth first search processing...
          */
-        private final Stack<File> directories = new Stack<File>();
+        private final Stack<File> directories = new Stack<>();
 
-        private final LinkedList<EmailDataset> available_emails = new LinkedList<EmailDataset>();
-        private final LinkedList<File> available_files = new LinkedList<File>();
+        private final LinkedList<EmailDataset> available_emails = new LinkedList<>();
+        private final LinkedList<File> available_files = new LinkedList<>();
         private final String root;
 
 
@@ -129,14 +127,8 @@ public class Dataset extends DatasetAbstract<EmailDataset> {
                 try {
                     available_emails.add(
                             new EmailDataset(
-                                    readFile(next_file.getPath()),
+                                    readFile(next_file.toPath()),
                                     next_file.getParent().substring(root.length() + 1)));
-
-                } catch (IOException ex) {
-                    Logger.getLogger(Dataset.class.getName()).log(Level.SEVERE, null, ex);
-
-                } catch (MessagingException ex) {
-                    Logger.getLogger(Dataset.class.getName()).log(Level.SEVERE, null, ex);
 
                 } catch (Exception ex) {
                     Logger.getLogger(Dataset.class.getName()).log(Level.SEVERE, null, ex);
@@ -148,21 +140,17 @@ public class Dataset extends DatasetAbstract<EmailDataset> {
             }
         }
 
-        private String readFile(final String file) throws IOException {
-            BufferedReader reader = new BufferedReader(new FileReader(file));
-            String line = null;
+        private String readFile(final Path file) throws IOException {
             StringBuilder string_builder = new StringBuilder();
             String ls = System.getProperty("line.separator");
 
-            try {
-                while ((line = reader.readLine()) != null) {
+            try (Stream<String> stream = Files.lines(file)) {
+                stream.forEach(line -> {
                     string_builder.append(line);
                     string_builder.append(ls);
-                }
+                });
 
                 return string_builder.toString();
-            } finally {
-                reader.close();
             }
         }
 
@@ -174,13 +162,14 @@ public class Dataset extends DatasetAbstract<EmailDataset> {
                 }
 
                 File current_folder = directories.pop();
-
-                for (File file : current_folder.listFiles()) {
-                    if (file.isDirectory()) {
-                        directories.push(file);
-
-                    } else {
-                        available_files.add(file);
+                File[] files = current_folder.listFiles();
+                if (files != null) {
+                    for (File file : files) {
+                        if (file.isDirectory()) {
+                            directories.push(file);
+                        } else {
+                            available_files.add(file);
+                        }
                     }
                 }
             }

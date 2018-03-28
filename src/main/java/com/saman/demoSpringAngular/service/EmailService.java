@@ -50,30 +50,7 @@ public class EmailService {
 
     public Page<Email> listAllByPage(Pageable pageable){
         Page<Email> page = emailRepository.findAll(pageable);
-        return new PageImpl<Email>(page.getContent(),pageable,page.getTotalElements());
-    }
-
-    @Deprecated
-    public Page<SearchResult> getEmailsContainingTerm(String term, Pageable pageable) {
-        List<SearchResult> retour = new ArrayList<>();
-        HashMap<Email,Integer> occurencesNumber = new HashMap<>();
-        emailRepository.findByContentContainingOrToContainingOrFromContainingOrCcContainingOrBccContainingOrSubjectContainingAllIgnoreCase(term,term,term,term,term,term)
-                .forEach(email -> {
-                    occurencesNumber.put(email,StringUtils.countOccurrencesOf(email.toString().toLowerCase(),term.toLowerCase()));
-                });
-
-        occurencesNumber.entrySet()
-                .stream()
-                .sorted(Map.Entry.<Email, Integer>comparingByValue().reversed())
-                .forEach((k) -> retour.add(new SearchResult(k.getKey(),k.getValue(),0f)));
-
-
-        // Create new Page
-        long nbrElement = retour.size();
-        int toDeleteBefore = pageable.getPageNumber()*pageable.getPageSize();
-        int toDeleteAfter = (pageable.getPageNumber()+1)*pageable.getPageSize();
-
-        return new PageImpl<>(retour.subList(toDeleteBefore, toDeleteAfter),pageable,nbrElement);
+        return new PageImpl<>(page.getContent(),pageable,page.getTotalElements());
     }
 
     public Email getOneById(String id) {
