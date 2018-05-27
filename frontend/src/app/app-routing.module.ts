@@ -5,7 +5,7 @@ import { SearchComponent } from './search/search.component';
 import { AllComponent } from './all/all.component';
 import { EmaildetailComponent } from './emaildetail/emaildetail.component';
 
-export const routes: Routes = [
+const routes: Routes = [
   {
     path: '',
     component: HomeComponent
@@ -23,3 +23,9 @@ export const routes: Routes = [
     component: AllComponent
   }
 ];
+
+@NgModule({
+  imports: [ RouterModule.forRoot(routes) ],
+  exports: [ RouterModule ]
+})
+export class AppRoutingModule {}

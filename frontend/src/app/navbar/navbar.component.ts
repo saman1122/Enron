@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component } from '@angular/core';
 import { RouterLink } from '@angular/router';
 
 @Component({
@@ -6,10 +6,10 @@ import { RouterLink } from '@angular/router';
   templateUrl: './navbar.component.html',
   styleUrls: ['./navbar.component.css']
 })
-export class NavbarComponent implements OnInit {
+export class NavbarComponent {
+  public search: string;
 
-  constructor() { }
-
-  ngOnInit() { }
-
+  constructor() {
+    this.search = '';
+  }
 }

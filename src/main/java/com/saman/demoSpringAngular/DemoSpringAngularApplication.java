@@ -8,13 +8,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
-import org.springframework.core.io.Resource;
-import org.springframework.core.io.support.PathMatchingResourcePatternResolver;
 
-import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Objects;
 
 @SpringBootApplication
 public class DemoSpringAngularApplication implements CommandLineRunner {
@@ -50,12 +46,15 @@ public class DemoSpringAngularApplication implements CommandLineRunner {
                     email.getDate()
             ));
 
+            // Enron database contains about 500k mails
+            // To prevent a Out Of Memory we save 15k emails at time
             if (i == 15000) {
                 emailRepository.saveAll(allEmails);
                 allEmails.clear();
                 i = 0;
             }
         }
+        // Save the remaining emails
         if (allEmails.size() > 0)
             emailRepository.saveAll(allEmails);
     }

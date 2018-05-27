@@ -29,29 +29,22 @@
   </table>
 </div>
 
-<div>
-  <span>Total elements: {{totalElements}}</span>
-  <span>Total pages: {{totalPages}}</span>
-  <span>Size: {{size}}</span>
-</div>
-
 <!-- pager -->
-<nav>
-  <ul class="pagination justify-content-end" *ngIf="pagesToShow && pagesToShow.length">
-    <li class="page-item" [ngClass]="{disabled:pages.pageNumber === 0}">
-      <a class="page-link" (click)="gopage(1)">First</a>
-    </li>
-    <li class="page-item" [ngClass]="{disabled:pages.pageNumber === 0}">
-      <a class="page-link" (click)="gopage(pages.pageNumber)">Previous</a>
-    </li>
-    <li class="page-item" *ngFor="let page of pagesToShow" [ngClass]="{active:pages.pageNumber + 1 === page}">
-      <a class="page-link" (click)="gopage(page)">{{page}}</a>
-    </li>
-    <li class="page-item" [ngClass]="{disabled:pages.pageNumber + 1 === totalPages}">
-      <a class="page-link" (click)="gopage(pages.pageNumber + 2)">Next</a>
-    </li>
-    <li class="page-item" [ngClass]="{disabled:pages.pageNumber + 1 === totalPages}">
-      <a class="page-link" (click)="gopage(totalPages)">Last</a>
-    </li>
-  </ul>
-</nav>
+<div class="container">
+  <div class="row">
+    <div class="col"></div>
+    <div class="col">
+      <ngb-pagination class="d-flex justify-content-center" [collectionSize]="totalElements" [(page)]="page" [pageSize]="size"
+        [maxSize]="5" [rotate]="true" [boundaryLinks]="true" (pageChange)="gopage($event)"></ngb-pagination>
+    </div>
+    <div class="col text-right">
+      <mat-form-field>
+        <mat-select [(ngModel)]="size" (selectionChange)="sizeChange($event.value)" placeholder="Size">
+          <mat-option *ngFor="let size of possibleSize" [value]="size">
+            {{size}}
+          </mat-option>
+        </mat-select>
+      </mat-form-field>
+    </div>
+  </div>
+</div>
